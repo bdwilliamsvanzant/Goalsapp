@@ -66,17 +66,7 @@
         app:layout_constraintTop_toBottomOf="@id/recyclerLayout" />
 
 
-    <Button
-        android:id="@+id/but_complete_goal"
-        android:layout_width="161dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/complete_button_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerLayout" />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
