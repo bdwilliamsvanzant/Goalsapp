@@ -1,3 +1,25 @@
 <resources>
-    <string name="app_name">goals</string>
+    <string name="app_name">Goal Tracker</string>
+    <string name="add_goal_button">Add Goal</string>
+    <string name="reward_points_label">Reward Points: </string>
+    <string name="goal_tracker_label">Goal Tracker</string>
+    <string name="goal_count_label">Goal Count: </string>
+    <string name="edit_button_text">Edit</string>
+    <string name="complete_button_text">Complete</string>
+    <string name="time_span">Time Span</string>
+    <string name="difficulty_label_text">Difficulty:</string>
+    <string name="get_date_button_text">Get Date</string>
+    <string name="reward_count_label">Reward Count: </string>
+    <string name="add_reward_button">Add Reward</string>
+    <string name="but_edit_reward">Edit Reward</string>
+    <string-array name="difficulty_array">
+        <item>Select a Difficulty</item>
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+        <item>Very Hard</item>
+    </string-array>
+    <string name="nav_goals">Goals</string>
+    <string name="nav_rewards">Rewards</string>
+    <string name="nav_stats">Stats</string>
 </resources>
