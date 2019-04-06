@@ -16,6 +16,7 @@ import com.example.goals.RewardsAdapter;
 import com.example.goals.R;
 import com.example.goals.DatabaseActivities.AddRewardActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -109,7 +110,7 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
         setSupportActionBar(toolbar);
         //textViewMsg = findViewById(R.id.Reward_count);
 
-        Button add_but = findViewById(R.id.but_add);
+        FloatingActionButton add_but = findViewById(R.id.but_add);
         add_but.setOnClickListener(listener);
         recyclerView = findViewById(R.id.rewardRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(RewardListActivity.this));

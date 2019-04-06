@@ -122,6 +122,12 @@ public class Goal implements Serializable {
         return goal_name != null ? goal_name.equals(goal.goal_name) : goal.goal_name == null;
     }
 
+    public void completeGoal(){
+        if(!complete){
+            setComplete(true);
+        }
+    }
+
     @Override
     public int hashCode(){
         int result = (int) goal_id;

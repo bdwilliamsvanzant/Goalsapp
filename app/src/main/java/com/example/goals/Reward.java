@@ -25,6 +25,9 @@ public class Reward implements Serializable {
     @ColumnInfo(name = "Points")
     private int points;
 
+    @ColumnInfo(name = "End Date")
+    private String end_time;
+
     @Ignore
     public Reward(){}
 
@@ -58,6 +61,10 @@ public class Reward implements Serializable {
 
     public void setPoints(int points){ this.points = points; }
 
+    public String getEnd_time() { return end_time; }
+
+    public void setEnd_time(String end_time) { this.end_time = end_time; }
+
     @Override
     public boolean equals(Object o){
         if(this == o) return true;
@@ -86,4 +93,5 @@ public class Reward implements Serializable {
         //TODO: Add in start/end and point fields.
     }
 }
+
 

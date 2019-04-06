@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "f045f29d671a9ff83de717a8cd495c9c",
+    "identityHash": "0a79e34a7edf659004688174ea200c97",
     "entities": [
       {
         "tableName": "goals",
@@ -74,7 +74,7 @@
       },
       {
         "tableName": "rewards",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reward_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Reward Name` TEXT, `Description` TEXT, `Points` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reward_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Reward Name` TEXT, `Description` TEXT, `Points` INTEGER NOT NULL, `End Date` TEXT)",
         "fields": [
           {
             "fieldPath": "reward_id",
@@ -99,6 +99,12 @@
             "columnName": "Points",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "end_time",
+            "columnName": "End Date",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -146,7 +152,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f045f29d671a9ff83de717a8cd495c9c\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0a79e34a7edf659004688174ea200c97\")"
     ]
   }
 }

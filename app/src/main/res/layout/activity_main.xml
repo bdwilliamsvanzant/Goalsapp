@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent">
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
 
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/recyclerLayout"
@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -36,34 +37,38 @@
             android:id="@+id/goal_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="?attr/actionBarSize"
             android:layout_marginStart="52dp"
+            android:text="@string/goal_count_label"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:textSize="24sp"
-            android:text="@string/goal_count_label" />
+            tools:textSize="24sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/goalRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="429dp"
+            android:paddingTop="?attr/actionBarSize"
+            android:layout_height="658dp"
             android:scrollbars="vertical"
-            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/goal_count"
             app:layout_constraintTop_toBottomOf="parent" />
-    </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/but_add"
+            android:layout_width="56dp"
+            android:layout_height="71dp"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="60dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:tint="@android:color/primary_text_dark"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recyclerLayout"
+            app:srcCompat="@android:drawable/ic_input_add"/>
 
-    <Button
-        android:id="@+id/but_add"
-        android:layout_width="142dp"
-        android:layout_height="52dp"
-
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:focusable="true"
-        android:text="@string/add_goal_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerLayout" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 

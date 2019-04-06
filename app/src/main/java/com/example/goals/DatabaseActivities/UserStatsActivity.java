@@ -5,48 +5,33 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 
 import com.example.goals.Database.GoalDatabase;
 import com.example.goals.Goal;
-import com.example.goals.GoalsAdapter;
 import com.example.goals.R;
 import com.example.goals.Reward;
-import com.example.goals.UserStatsAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class UserStatsActivity  extends AppCompatActivity {
 
-    private TextView textViewMsg;
-    private RecyclerView recyclerView;
     private GoalDatabase goalDatabase;
 
-    private List<Goal> goals;
-    private Goal mostRecentGoal;
-    private List<Reward> rewards;
-    private Reward mostRecentReward;
 
-    private UserStatsAdapter userStatsAdapter;
-    private int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_stats);
         initializeViews();
-        BottomNavigationView nav = findViewById(R.id.navigation);
+         BottomNavigationView nav = findViewById(R.id.navigation);
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -71,80 +56,82 @@ public class UserStatsActivity  extends AppCompatActivity {
     private void initializeViews() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        textViewMsg = findViewById(R.id.goal_count);
-
-        recyclerView = findViewById(R.id.goalRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(UserStatsActivity.this));
-
-        goals = new ArrayList<>();
-        userStatsAdapter = new UserStatsAdapter(goals, UserStatsActivity.this);
-
-        recyclerView.setAdapter(userStatsAdapter);
-
-
     }
 
-    private static class RetrieveTask extends AsyncTask<Void, Void, List<Goal>> {
-        private WeakReference<UserStatsActivity> activityReference;
+    private void display() {
+        //find most recently created goal
+        goalDatabase = GoalDatabase.getInstance(UserStatsActivity.this);
+        View rootView = getWindow().getDecorView().getRootView();
+        new RetrieveGoal(this, rootView).execute();
+        new RetrieveReward(this, rootView).execute();
+    }
 
-        RetrieveTask(UserStatsActivity context) {
+    private static class RetrieveGoal extends AsyncTask<Void, Void, Goal> {
+        private WeakReference<UserStatsActivity> activityReference;
+        private View rootView;
+
+
+        public RetrieveGoal(UserStatsActivity context, View rootView){
             activityReference = new WeakReference<>(context);
+            this.rootView=rootView;
         }
 
         @Override
-        protected List<Goal> doInBackground(Void... voids) {
+        protected Goal doInBackground(Void... voids) {
             if (activityReference.get() != null)
-                return activityReference.get().goalDatabase.getGoalDao().getGoals();
+                return activityReference.get().goalDatabase.getGoalDao().getMostRecentGoal();
             else
                 return null;
         }
 
         @Override
-        protected void onPostExecute(List<Goal> goals) {
-            if (goals != null && goals.size() > 0) {
-                activityReference.get().goals.clear();
-                activityReference.get().goals.addAll(goals);
+        protected void onPostExecute(Goal goal) {
 
-                activityReference.get().textViewMsg.setVisibility(View.GONE);
+            if (goal != null ) {
+                //set UI to goal values
+                TextView goalTextView = rootView.findViewById(R.id.goal_info);
 
+                goalTextView.setText(goal.getGoal_name()+"\n"
+                        +goal.getContent() +"\n"
+                        +goal.getDifficulty()+"\n"
+                        +goal.getPoints()+"\n"
+                        +goal.getStart_time()+"\n"
+                        +goal.getEnd_time()
+                );
             }
         }
     }
 
-    private void display() {
-        //retrieve all goals
-        goalDatabase = GoalDatabase.getInstance(UserStatsActivity.this);
-        new UserStatsActivity.RetrieveTask(this).execute();
-
-        //find most recently created goal
+    private static class RetrieveReward extends AsyncTask<Void, Void, Reward> {
+        private WeakReference<UserStatsActivity> activityReference;
+        private View rootView;
 
 
-        //retrieve all rewards
+        public RetrieveReward(UserStatsActivity context, View rootView){
+            activityReference = new WeakReference<>(context);
+            this.rootView=rootView;
+        }
 
-        //find most recently achieved reward
+        @Override
+        protected Reward doInBackground(Void... voids) {
+            if (activityReference.get() != null)
+                return activityReference.get().goalDatabase.getRewardDao().getMostRecentReward();
+            else
+                return null;
+        }
 
-    }
+        @Override
+        protected void onPostExecute(Reward reward) {
+            if (reward != null ) {
+                //set UI to reward values
+                TextView rewardTextView = rootView.findViewById(R.id.reward_info);
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 100 && resultCode > 0) {
-            if (resultCode == 1) {
-                goals.add((Goal) data.getSerializableExtra("goal"));
-            } else if (resultCode == 2) {
-                goals.set(pos, (Goal) data.getSerializableExtra("goal"));
+                rewardTextView.setText(reward.getReward_name()+"\n"
+                        +reward.getDescription()+"\n"
+                        +reward.getPoints()
+                );
             }
         }
-        listVisibility();
-    }
-
-    private void listVisibility(){
-        int emptyMsgVisibility = View.GONE;
-        if(goals.size() == 0){
-            if(textViewMsg.getVisibility() == View.GONE)
-                emptyMsgVisibility = View.VISIBLE;
-        }
-        textViewMsg.setVisibility(emptyMsgVisibility);
-        userStatsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -153,4 +140,3 @@ public class UserStatsActivity  extends AppCompatActivity {
         super.onDestroy();
     }
 }
-

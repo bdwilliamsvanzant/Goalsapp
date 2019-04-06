@@ -15,6 +15,7 @@ import com.example.goals.Database.GoalDatabase;
 import com.example.goals.GoalsAdapter;
 import com.example.goals.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -107,8 +108,7 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         textViewMsg = findViewById(R.id.goal_count);
-
-        Button add_but = findViewById(R.id.but_add);
+        FloatingActionButton add_but = findViewById(R.id.but_add);
         add_but.setOnClickListener(listener);
         recyclerView = findViewById(R.id.goalRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(GoalListActivity.this));

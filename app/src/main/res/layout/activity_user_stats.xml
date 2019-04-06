@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -17,152 +23,153 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"/>
+            android:background="?attr/colorPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/page_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="5dp"
-        card_view:cardUseCompatPadding="true"
         card_view:cardElevation="5dp"
-        android:id="@+id/page_title">
-    <LinearLayout
-        android:background="?android:attr/selectableItemBackground"
-        android:orientation="vertical"
-        android:layout_margin="2dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        card_view:cardUseCompatPadding="true">
 
-        <TextView
-            android:id="@+id/page_title_text"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:layout_margin="2dp"
+            android:background="?android:attr/selectableItemBackground"
             android:gravity="center"
-            tools:text="My Stats "
-            />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/page_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="30sp"
+                tools:text="My Stats " />
+
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/totals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="5dp"
-        card_view:cardUseCompatPadding="true"
         card_view:cardElevation="5dp"
-        android:id="@+id/totals">
+        card_view:cardUseCompatPadding="true">
+
         <LinearLayout
-            android:background="?android:attr/selectableItemBackground"
-            android:orientation="vertical"
-            android:layout_margin="2dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/totals_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
-                tools:text="Point Totals"
-                />
+                tools:text="Point Totals" />
 
-        <TextView
-            android:id="@+id/total_current_points"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            tools:text="Total Current Points: "
-            />
-        <TextView
-            android:id="@+id/total_points_spent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            tools:text="Total Points Spent: "
-            />
+            <TextView
+                android:id="@+id/total_current_points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="Total Current Points: " />
+
+            <TextView
+                android:id="@+id/total_points_spent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="Total Points Spent: " />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 
-
     <androidx.cardview.widget.CardView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="5dp"
-        card_view:cardUseCompatPadding="true"
         card_view:cardElevation="5dp"
-        android:id="@+id/imageView">
+        card_view:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:background="?android:attr/selectableItemBackground"
-            android:orientation="vertical"
-            android:layout_margin="2dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/last_goal_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
-                tools:text="Most Recently Created Goal"
-                />
+                tools:text="Most Recently Completed Goal" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mostRecentGoalRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="429dp"
-                android:scrollbars="vertical"/>
+            <TextView
+                android:id="@+id/goal_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="Goal: " />
+
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/reward"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="5dp"
-        card_view:cardUseCompatPadding="true"
         card_view:cardElevation="5dp"
-        android:id="@+id/reward">
+        card_view:cardUseCompatPadding="true">
+
         <LinearLayout
-            android:background="?android:attr/selectableItemBackground"
-            android:orientation="vertical"
-            android:layout_margin="2dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/reward_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
-                tools:text="Most Recent Reward Earned"
-                />
+                tools:text="Most Recent Reward Earned" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mostRecentRewardRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="429dp"
-                android:scrollbars="vertical" />
-
-
+            <TextView
+                android:id="@+id/reward_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="Reward: " />
 
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/navigation" />
+
 
 </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+    android:id="@+id/navigation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/windowBackground"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:menu="@menu/navigation" />
+</androidx.constraintlayout.widget.ConstraintLayout>
