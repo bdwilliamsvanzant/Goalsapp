@@ -135,11 +135,17 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
     public void onGoalClick(final int pos) {
         new AlertDialog.Builder(GoalListActivity.this)
                 .setTitle("Select Options")
-                .setItems(new String[]{"Delete", "Update"}, new DialogInterface.OnClickListener() {
+                .setItems(new String[]{"Complete", "Update", "Delete"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
+                                goals.get(pos).setComplete(true);
+                                goalDatabase.getGoalDao().updateGoal(goals.get(pos));
+                                goals.remove(pos);
+                                listVisibility();
+                                break;
+                            case 2:
                                 goalDatabase.getGoalDao().deleteGoal(goals.get(pos));
                                 goals.remove(pos);
                                 listVisibility();
