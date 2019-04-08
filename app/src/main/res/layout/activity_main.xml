@@ -37,8 +37,8 @@
             android:id="@+id/goal_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="?attr/actionBarSize"
             android:layout_marginStart="52dp"
+            android:paddingTop="?attr/actionBarSize"
             android:text="@string/goal_count_label"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,11 +47,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/goalRecyclerView"
             android:layout_width="match_parent"
-            android:paddingTop="?attr/actionBarSize"
             android:layout_height="658dp"
+            android:paddingTop="?attr/actionBarSize"
             android:scrollbars="vertical"
             app:layout_constraintStart_toEndOf="@+id/goal_count"
             app:layout_constraintTop_toBottomOf="parent" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/but_add"
             android:layout_width="56dp"
@@ -61,23 +62,22 @@
             android:layout_marginBottom="60dp"
             android:clickable="true"
             android:focusable="true"
-            app:tint="@android:color/primary_text_dark"
             app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toTopOf="@+id/navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recyclerLayout"
-            app:srcCompat="@android:drawable/ic_input_add"/>
+            app:srcCompat="@android:drawable/ic_input_add"
+            app:tint="@android:color/primary_text_dark" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/colorAccent"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
