@@ -33,7 +33,7 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
 
     private TextView textViewMsg;
     private RecyclerView recyclerView;
-    private GoalDatabase GoalDatabase;
+    private GoalDatabase goalDatabase;
     private List<Reward> Rewards;
     private RewardsAdapter RewardsAdapter;
     private int pos;
@@ -46,7 +46,7 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
     };
 
     private void displayList() {
-        GoalDatabase = GoalDatabase.getInstance(RewardListActivity.this);
+        goalDatabase = GoalDatabase.getInstance(RewardListActivity.this);
         new RetrieveTask(this).execute();
     }
 
@@ -60,7 +60,7 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
         @Override
         protected List<Reward> doInBackground(Void... voids) {
             if (activityReference.get() != null)
-                return activityReference.get().GoalDatabase.getRewardDao().getRewards();
+                return activityReference.get().goalDatabase.getRewardDao().getRewards();
             else
                 return null;
         }
@@ -108,7 +108,7 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
     private void initializeViews() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //textViewMsg = findViewById(R.id.Reward_count);
+        textViewMsg = findViewById(R.id.reward_count);
 
         FloatingActionButton add_but = findViewById(R.id.but_add);
         add_but.setOnClickListener(listener);
@@ -125,9 +125,9 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100 && resultCode > 0) {
             if (resultCode == 1) {
-                Rewards.add((Reward) data.getSerializableExtra("Reward"));
+                Rewards.add((Reward) data.getSerializableExtra("reward"));
             } else if (resultCode == 2) {
-                Rewards.set(pos, (Reward) data.getSerializableExtra("Reward"));
+                Rewards.set(pos, (Reward) data.getSerializableExtra("reward"));
             }
             listVisibility();
             displayList();
@@ -143,14 +143,14 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                GoalDatabase.getRewardDao().deleteReward(Rewards.get(pos));
+                                goalDatabase.getRewardDao().deleteReward(Rewards.get(pos));
                                 Rewards.remove(pos);
                                 listVisibility();
                                 break;
                             case 1:
                                 RewardListActivity.this.pos = pos;
                                 startActivityForResult(
-                                        new Intent(RewardListActivity.this, AddRewardActivity.class).putExtra("Reward", Rewards.get(pos).toString()), 100);
+                                        new Intent(RewardListActivity.this, AddRewardActivity.class).putExtra("reward", Rewards.get(pos)), 100);
                                 break;
                         }
                     }
@@ -169,7 +169,7 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
 
     @Override
     protected void onDestroy(){
-        GoalDatabase.cleanUp();
+        goalDatabase.cleanUp();
         super.onDestroy();
     }
 }

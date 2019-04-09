@@ -25,7 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AddRewardActivity extends AppCompatActivity {
 
-    private TextInputEditText et_title, et_content, et_startDate, et_endDate;
+    private TextInputEditText et_title, et_content, et_points;
     private GoalDatabase goalDatabase;
     private Reward reward;
     private boolean update;
@@ -37,18 +37,20 @@ public class AddRewardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_reward);
         et_title = findViewById(R.id.et_title);
-        et_content = findViewById(R.id.et_content);
-        et_startDate = findViewById(R.id.et_startDate);
-        et_endDate = findViewById(R.id.et_endDate);
+        et_content = findViewById(R.id.et_reward_description);
+        et_points = findViewById(R.id.reward_points_entry);
 
         goalDatabase = GoalDatabase.getInstance(AddRewardActivity.this);
 
         Button save_butt = findViewById(R.id.but_save);
-        if ((reward = (Reward) getIntent().getSerializableExtra("reward")) != null) {
-            getSupportActionBar().setTitle("Update Reward");
+        if ((reward = (Reward) getIntent().getSerializableExtra("reward")) != null)
+        {
+            //getSupportActionBar().setTitle("Update Reward");
             update = true;
-            save_butt.setText(reward.getReward_name());
+            //save_butt.setText(reward.getReward_name());
             et_title.setText(reward.getReward_name());
+            et_content.setText(reward.getDescription());
+            et_points.setText(Integer.toString(reward.getPoints()));
         }
 
         save_butt.setOnClickListener(new View.OnClickListener() {
@@ -61,20 +63,24 @@ public class AddRewardActivity extends AppCompatActivity {
                     if (et_title.getText() != null) {
                         reward.setReward_name(et_title.getText().toString());
                     }
+                    if (et_points.getText() != null) {
+                        reward.setPoints( Integer.parseInt(et_points.getText().toString()));
+                    }
                     goalDatabase.getRewardDao().updateReward(reward);
                     setResult(reward, 2);
-                } else {
+                }
+                else {
                     String rewardDescription;
                     String rewardName;
                     if (et_content.getText() != null) {
                         rewardDescription = et_content.getText().toString();
                     }
                     //String content, String reward_name, int difficulty, int points, String start_time, String end_time
-                    if (et_content.getText() != null && et_title.getText() != null && et_startDate.getText() != null && et_endDate.getText() != null) {
+                    if (et_content.getText() != null && et_title.getText() != null && et_points != null) {
                         reward = new Reward(et_title.getText().toString(),
                                 et_content.getText().toString(),
-                                points);
-
+                                Integer.parseInt(et_points.getText().toString()) );
+                        Log.e("points", "oncreate: " +Integer.parseInt(et_points.getText().toString()) );
                         new InsertTask(AddRewardActivity.this, reward).execute();
                     }
                 }

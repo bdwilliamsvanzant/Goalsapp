@@ -83,6 +83,7 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
         setContentView(R.layout.activity_main);
         initializeViews();
         BottomNavigationView nav = findViewById(R.id.navigation);
+        //BottomNavigationView.setItemTextColor(ColorStateList.valueOf(Color.WHITE));
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -90,6 +91,8 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
                     case R.id.navigation_goals:
                         break;
                     case R.id.navigation_rewards:
+                       // BottomNavigationView.setItemTextColor();
+                       // BottomNavigationView.setItemIconTintList(null);
                         Intent intent1 = new Intent(GoalListActivity.this, RewardListActivity.class);
                         startActivity(intent1);
                         break;

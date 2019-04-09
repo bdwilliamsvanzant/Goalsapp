@@ -35,9 +35,12 @@ public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.RewardHo
 
     @Override
     public void onBindViewHolder(RewardHolder holder, int position) {
-        Log.e("bind", "onBindViewHolder: "+ list.get(position));
-        holder.textViewTitle.setText(list.get(position).getReward_name());
-        holder.textViewDescription.setText(list.get(position).getDescription());
+        if(list.get(position)!= null) {
+            Log.e("bind", "onBindViewHolder: " + list.get(position));
+            holder.textViewTitle.setText(list.get(position).getReward_name());
+            holder.textViewDescription.setText(list.get(position).getDescription());
+            holder.textViewPoints.setText(Integer.toString(list.get(position).getPoints()));
+        }
     }
 
     @Override
@@ -56,7 +59,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.RewardHo
             itemView.setOnClickListener(this);
             textViewDescription = itemView.findViewById(R.id.item_text);
             textViewTitle = itemView.findViewById(R.id.reward_name);
-            //textViewPoints = itemView.findViewById(R.id.tv_Reward_points);
+            textViewPoints = itemView.findViewById(R.id.tv_reward_points);
         }
 
         @Override
