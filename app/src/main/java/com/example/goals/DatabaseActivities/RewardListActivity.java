@@ -146,15 +146,18 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
                                 Rewards.get(pos).setComplete(true);
                                 goalDatabase.getRewardDao().updateReward(Rewards.get(pos));
                                 Rewards.remove(pos);
+                                recyclerView.setAdapter(RewardsAdapter);
                                 break;
                             case 1:
                                 RewardListActivity.this.pos = pos;
                                 startActivityForResult(
                                         new Intent(RewardListActivity.this, AddRewardActivity.class).putExtra("reward", Rewards.get(pos)), 100);
+                                recyclerView.setAdapter(RewardsAdapter);
                                 break;
                             case 2:
                                 goalDatabase.getRewardDao().deleteReward(Rewards.get(pos));
                                 Rewards.remove(pos);
+                                recyclerView.setAdapter(RewardsAdapter);
                                 break;
 
                         }

@@ -18,7 +18,7 @@ public interface RewardDao {
     @Query("SELECT * FROM " + Constants.TABLE_NAME_REWARD + "\n WHERE `End Date` = (SELECT MAX(`End Date`) FROM "+ Constants.TABLE_NAME_REWARD + ");" )
     Reward getMostRecentReward();
 
-    @Query("SELECT * FROM " + Constants.TABLE_NAME_REWARD)
+    @Query("SELECT * FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 0")
     List<Reward> getRewards();
 
     @Insert
