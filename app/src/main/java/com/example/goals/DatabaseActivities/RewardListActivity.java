@@ -2,13 +2,13 @@ package com.example.goals.DatabaseActivities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.goals.Database.GoalDatabase;
 import com.example.goals.Reward;
@@ -31,7 +31,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RewardListActivity extends AppCompatActivity implements RewardsAdapter.OnRewardItemClick {
 
-    private TextView textViewMsg;
     private RecyclerView recyclerView;
     private GoalDatabase goalDatabase;
     private List<Reward> Rewards;
@@ -71,7 +70,6 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
                 activityReference.get().Rewards.clear();
                 activityReference.get().Rewards.addAll(Rewards);
 
-                activityReference.get().textViewMsg.setVisibility(View.GONE);
                 activityReference.get().RewardsAdapter.notifyDataSetChanged();
 
             }
@@ -84,6 +82,9 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
         setContentView(R.layout.activity_reward);
         initializeViews();
         BottomNavigationView nav = findViewById(R.id.navigation);
+        Menu menu = nav.getMenu();
+        MenuItem menuItem = menu.getItem(1);
+        menuItem.setChecked(true);
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -102,13 +103,13 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
                 return false;
             }
         });
+        nav.setSelectedItemId(R.id.navigation_rewards);
         displayList();
     }
 
     private void initializeViews() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        textViewMsg = findViewById(R.id.reward_count);
 
         FloatingActionButton add_but = findViewById(R.id.but_add);
         add_but.setOnClickListener(listener);
@@ -129,7 +130,6 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
             } else if (resultCode == 2) {
                 Rewards.set(pos, (Reward) data.getSerializableExtra("reward"));
             }
-            listVisibility();
             displayList();
         }
     }
@@ -145,7 +145,6 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
                             case 0:
                                 goalDatabase.getRewardDao().deleteReward(Rewards.get(pos));
                                 Rewards.remove(pos);
-                                listVisibility();
                                 break;
                             case 1:
                                 RewardListActivity.this.pos = pos;
@@ -155,16 +154,6 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
                         }
                     }
                 }).show();
-    }
-
-    private void listVisibility(){
-        int emptyMsgVisibility = View.GONE;
-        if(Rewards.size() == 0){
-            if(textViewMsg.getVisibility() == View.GONE)
-                emptyMsgVisibility = View.VISIBLE;
-        }
-        textViewMsg.setVisibility(emptyMsgVisibility);
-        RewardsAdapter.notifyDataSetChanged();
     }
 
     @Override

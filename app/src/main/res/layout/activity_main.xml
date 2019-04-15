@@ -32,16 +32,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:id="@+id/goal_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
-            android:paddingTop="?attr/actionBarSize"
-            android:text="@string/goal_count_label"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:textSize="24sp" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/goalRecyclerView"

@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+
 
 import com.example.goals.Goal;
 import com.example.goals.Database.GoalDatabase;
@@ -30,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.OnGoalItemClick {
 
-    private TextView textViewMsg;
     private RecyclerView recyclerView;
     private GoalDatabase goalDatabase;
     private List<Goal> goals;
@@ -70,7 +69,6 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
                 activityReference.get().goals.clear();
                 activityReference.get().goals.addAll(goals);
 
-                activityReference.get().textViewMsg.setVisibility(View.GONE);
                 activityReference.get().goalsAdapter.notifyDataSetChanged();
 
             }
@@ -83,7 +81,9 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
         setContentView(R.layout.activity_main);
         initializeViews();
         BottomNavigationView nav = findViewById(R.id.navigation);
-        //BottomNavigationView.setItemTextColor(ColorStateList.valueOf(Color.WHITE));
+        Menu menu = nav.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -104,13 +104,13 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
                 return false;
             }
         });
+        nav.setSelectedItemId(R.id.navigation_goals);
         displayList();
     }
 
     private void initializeViews() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        textViewMsg = findViewById(R.id.goal_count);
         FloatingActionButton add_but = findViewById(R.id.but_add);
         add_but.setOnClickListener(listener);
         recyclerView = findViewById(R.id.goalRecyclerView);
@@ -129,7 +129,6 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
             } else if (resultCode == 2) {
                 goals.set(pos, (Goal) data.getSerializableExtra("goal"));
             }
-            listVisibility();
             displayList();
         }
     }
@@ -146,12 +145,10 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
                                 goals.get(pos).setComplete(true);
                                 goalDatabase.getGoalDao().updateGoal(goals.get(pos));
                                 goals.remove(pos);
-                                listVisibility();
                                 break;
                             case 2:
                                 goalDatabase.getGoalDao().deleteGoal(goals.get(pos));
                                 goals.remove(pos);
-                                listVisibility();
                                 break;
                             case 1:
                                 GoalListActivity.this.pos = pos;
@@ -165,15 +162,6 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
                 }).show();
     }
 
-       private void listVisibility(){
-        int emptyMsgVisibility = View.GONE;
-        if(goals.size() == 0){
-            if(textViewMsg.getVisibility() == View.GONE)
-                emptyMsgVisibility = View.VISIBLE;
-        }
-        textViewMsg.setVisibility(emptyMsgVisibility);
-        goalsAdapter.notifyDataSetChanged();
-    }
 
     @Override
     protected void onDestroy(){

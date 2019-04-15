@@ -3,6 +3,7 @@ package com.example.goals.DatabaseActivities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -32,6 +33,9 @@ public class UserStatsActivity  extends AppCompatActivity {
         setContentView(R.layout.activity_user_stats);
         initializeViews();
          BottomNavigationView nav = findViewById(R.id.navigation);
+        Menu menu = nav.getMenu();
+        MenuItem menuItem = menu.getItem(2);
+        menuItem.setChecked(true);
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -50,6 +54,7 @@ public class UserStatsActivity  extends AppCompatActivity {
                 return false;
             }
         });
+        nav.setSelectedItemId(R.id.navigation_stats);
         display();
     }
 

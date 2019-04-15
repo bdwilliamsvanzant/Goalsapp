@@ -33,17 +33,6 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:id="@+id/reward_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
-            android:text="@string/reward_count_label"
-            android:paddingTop="?attr/actionBarSize"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:textSize="24sp" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rewardRecyclerView"
             android:paddingTop="?attr/actionBarSize"
@@ -84,5 +73,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+
         app:menu="@menu/navigation" />
 </androidx.constraintlayout.widget.ConstraintLayout>
