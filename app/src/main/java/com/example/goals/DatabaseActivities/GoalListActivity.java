@@ -146,14 +146,14 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
                                 goalDatabase.getGoalDao().updateGoal(goals.get(pos));
                                 goals.remove(pos);
                                 break;
-                            case 2:
-                                goalDatabase.getGoalDao().deleteGoal(goals.get(pos));
-                                goals.remove(pos);
-                                break;
                             case 1:
                                 GoalListActivity.this.pos = pos;
                                 startActivityForResult(
                                         new Intent(GoalListActivity.this, AddGoalActivity.class).putExtra("goal", goals.get(pos)), 100);
+                                break;
+                            case 2:
+                                goalDatabase.getGoalDao().deleteGoal(goals.get(pos));
+                                goals.remove(pos);
                                 break;
                         }
 

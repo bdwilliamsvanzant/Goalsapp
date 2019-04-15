@@ -28,6 +28,8 @@ public class Reward implements Serializable {
     @ColumnInfo(name = "End Date")
     private String end_time;
 
+    @ColumnInfo(name = "Complete")
+    private boolean complete;
     @Ignore
     public Reward(){}
 
@@ -64,6 +66,8 @@ public class Reward implements Serializable {
     public String getEnd_time() { return end_time; }
 
     public void setEnd_time(String end_time) { this.end_time = end_time; }
+    public void setComplete (boolean isComplete) { this.complete = isComplete; }
+    public boolean getComplete (){ return complete; }
 
     @Override
     public boolean equals(Object o){

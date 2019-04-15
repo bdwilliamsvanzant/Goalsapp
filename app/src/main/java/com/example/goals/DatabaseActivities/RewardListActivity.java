@@ -138,12 +138,13 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
     public void onRewardClick(final int pos) {
         new AlertDialog.Builder(RewardListActivity.this)
                 .setTitle("Select Options")
-                .setItems(new String[]{"Delete", "Update"}, new DialogInterface.OnClickListener() {
+                .setItems(new String[]{"Obtain","Update", "Delete"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                goalDatabase.getRewardDao().deleteReward(Rewards.get(pos));
+                                Rewards.get(pos).setComplete(true);
+                                goalDatabase.getRewardDao().updateReward(Rewards.get(pos));
                                 Rewards.remove(pos);
                                 break;
                             case 1:
@@ -151,6 +152,11 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
                                 startActivityForResult(
                                         new Intent(RewardListActivity.this, AddRewardActivity.class).putExtra("reward", Rewards.get(pos)), 100);
                                 break;
+                            case 2:
+                                goalDatabase.getRewardDao().deleteReward(Rewards.get(pos));
+                                Rewards.remove(pos);
+                                break;
+
                         }
                     }
                 }).show();
