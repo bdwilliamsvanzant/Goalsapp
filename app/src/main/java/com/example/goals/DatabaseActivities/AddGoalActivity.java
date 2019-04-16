@@ -77,7 +77,7 @@ public class AddGoalActivity extends AppCompatActivity {
                     goalDatabase.getGoalDao().updateGoal(goal);
                     setResult(goal, 2);
                 } else {
-                    points = difficulty.getSelectedItemPosition() * 100;
+                    points = (difficulty.getSelectedItemPosition()+1) * 100;
 
                     //String content, String goal_name, int difficulty, int points, String start_time, String end_time
 

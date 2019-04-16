@@ -24,6 +24,7 @@ public interface RewardDao {
     @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 0")
     int getEarnedRewards();
 
+
     @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 1")
     int getUnearnedRewards();
 

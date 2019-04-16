@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="Active Goals: " />
+                    android:text="# Active Goals: " />
 
                 <TextView
                     android:id="@+id/total_completed_goals"
@@ -129,18 +129,18 @@
                     android:text="Rewards History" />
 
                 <TextView
-                    android:id="@+id/total_active_rewards"
+                    android:id="@+id/total_unearned_rewards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="Active Rewards: " />
+                    android:text="# Unearned Rewards: " />
 
                 <TextView
-                    android:id="@+id/total_completed_rewards"
+                    android:id="@+id/total_earned_rewards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="Completed Rewards: " />
+                    android:text="# Earned Rewards: " />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
@@ -177,7 +177,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="Total Points Spent: " />
+                    android:text="Total Spent Points: " />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

@@ -45,11 +45,13 @@
             android:layout_height="wrap_content"
             android:inputType="textNoSuggestions"
             android:layout_below="@id/et_contentInput">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/reward_points_entry"
-            android:layout_width="match_parent"
+        <Spinner
+            android:id="@+id/difficulty_spinner"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Required Points: "/>
+            android:layout_below="@+id/endDateInput">
+
+        </Spinner>
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout

@@ -67,8 +67,30 @@ public class UserStatsActivity  extends AppCompatActivity {
         //find most recently created goal
         goalDatabase = GoalDatabase.getInstance(UserStatsActivity.this);
         View rootView = getWindow().getDecorView().getRootView();
+
+        //get # active goals
+        new RetrieveActiveGoals(this, rootView).execute();
+        //get # completed goals
+        new RetrieveCompletedGoals(this, rootView).execute();
+
+        //get # unearned rewards
+        new RetrieveUnearnedRewards(this, rootView).execute();
+        //get # Earned rewards
+        new RetrieveEarnedRewards(this, rootView).execute();
+
+        //get total current points
+        new RetrieveTotalCurrentPoints(this, rootView).execute();
+        //get total points spent
+        new RetrieveSpentPoints(this, rootView).execute();
+
+        //most recently completed goal
         new RetrieveGoal(this, rootView).execute();
+
+        //most recently completed reward
         new RetrieveReward(this, rootView).execute();
+
+
+
     }
 
     private static class RetrieveGoal extends AsyncTask<Void, Void, Goal> {
@@ -138,6 +160,194 @@ public class UserStatsActivity  extends AppCompatActivity {
             }
         }
     }
+
+    private static class RetrieveActiveGoals extends AsyncTask<Void, Void, Integer> {
+        private WeakReference<UserStatsActivity> activityReference;
+        private View rootView;
+
+
+        public RetrieveActiveGoals(UserStatsActivity context, View rootView){
+            activityReference = new WeakReference<>(context);
+            this.rootView=rootView;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            if (activityReference.get() != null)
+                return activityReference.get().goalDatabase.getGoalDao().getActiveGoals();
+            else
+                return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer numActiveGoals) {
+
+
+            //set UI to goal values
+            TextView numActiveGoalsTextView = rootView.findViewById(R.id.total_active_goals);
+
+            numActiveGoalsTextView.setText( "# Active Goals: "+ numActiveGoals);
+
+        }
+    }
+
+    private static class RetrieveCompletedGoals extends AsyncTask<Void, Void, Integer> {
+        private WeakReference<UserStatsActivity> activityReference;
+        private View rootView;
+
+
+        public RetrieveCompletedGoals(UserStatsActivity context, View rootView){
+            activityReference = new WeakReference<>(context);
+            this.rootView=rootView;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            if (activityReference.get() != null)
+                return activityReference.get().goalDatabase.getGoalDao().getCompletedGoals();
+            else
+                return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer numCompletedGoals) {
+
+
+            //set UI to goal values
+            TextView numActiveGoalsTextView = rootView.findViewById(R.id.total_completed_goals);
+
+            numActiveGoalsTextView.setText( "# Completed Goals: "+ numCompletedGoals);
+
+        }
+    }
+
+    private static class RetrieveUnearnedRewards extends AsyncTask<Void, Void, Integer> {
+        private WeakReference<UserStatsActivity> activityReference;
+        private View rootView;
+
+
+        public RetrieveUnearnedRewards(UserStatsActivity context, View rootView){
+            activityReference = new WeakReference<>(context);
+            this.rootView=rootView;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            if (activityReference.get() != null)
+                return activityReference.get().goalDatabase.getRewardDao().getUnearnedRewards();
+            else
+                return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer numUnearnedRewards) {
+
+
+            //set UI to goal values
+            TextView numActiveGoalsTextView = rootView.findViewById(R.id.total_unearned_rewards);
+
+            numActiveGoalsTextView.setText( "# Unearned Rewards: "+ numUnearnedRewards);
+
+        }
+    }
+
+    private static class RetrieveEarnedRewards extends AsyncTask<Void, Void, Integer> {
+        private WeakReference<UserStatsActivity> activityReference;
+        private View rootView;
+
+
+        public RetrieveEarnedRewards(UserStatsActivity context, View rootView){
+            activityReference = new WeakReference<>(context);
+            this.rootView=rootView;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            if (activityReference.get() != null)
+                return activityReference.get().goalDatabase.getRewardDao().getEarnedRewards();
+            else
+                return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer numEarnedRewards) {
+
+
+            //set UI to goal values
+            TextView numActiveGoalsTextView = rootView.findViewById(R.id.total_earned_rewards);
+
+            numActiveGoalsTextView.setText( "# Unearned Rewards: "+ numEarnedRewards);
+
+        }
+    }
+
+    private static class RetrieveTotalCurrentPoints extends AsyncTask<Void, Void, Integer> {
+        private WeakReference<UserStatsActivity> activityReference;
+        private View rootView;
+
+
+        public RetrieveTotalCurrentPoints(UserStatsActivity context, View rootView){
+            activityReference = new WeakReference<>(context);
+            this.rootView=rootView;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            if (activityReference.get() != null){
+
+                Integer totalPointsEarned = activityReference.get().goalDatabase.getGoalDao().getTotalPointsEarned();
+                return totalPointsEarned - activityReference.get().goalDatabase.getRewardDao().getSpentPoints();
+            }
+            else
+                return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer currentPoints) {
+
+
+            //set UI to goal values
+            TextView numActiveGoalsTextView = rootView.findViewById(R.id.total_current_points);
+
+            numActiveGoalsTextView.setText( "Total Current Points: "+ currentPoints);
+
+        }
+    }
+
+    private static class RetrieveSpentPoints extends AsyncTask<Void, Void, Integer> {
+        private WeakReference<UserStatsActivity> activityReference;
+        private View rootView;
+
+
+        public RetrieveSpentPoints(UserStatsActivity context, View rootView){
+            activityReference = new WeakReference<>(context);
+            this.rootView=rootView;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            if (activityReference.get() != null){
+
+                return activityReference.get().goalDatabase.getRewardDao().getSpentPoints();
+            }
+            else
+                return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer spentPoints) {
+
+
+            //set UI to goal values
+            TextView numActiveGoalsTextView = rootView.findViewById(R.id.total_points_spent);
+
+            numActiveGoalsTextView.setText( "Total Spent Points: "+ spentPoints);
+
+        }
+    }
+
+
+
 
     @Override
     protected void onDestroy(){

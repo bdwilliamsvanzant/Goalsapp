@@ -25,7 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AddRewardActivity extends AppCompatActivity {
 
-    private TextInputEditText et_title, et_content, et_points;
+    private TextInputEditText et_title, et_content;
+    private Spinner et_points;
     private GoalDatabase goalDatabase;
     private Reward reward;
     private boolean update;
@@ -38,7 +39,7 @@ public class AddRewardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_reward);
         et_title = findViewById(R.id.et_title);
         et_content = findViewById(R.id.et_reward_description);
-        et_points = findViewById(R.id.reward_points_entry);
+        et_points = findViewById(R.id.difficulty_spinner);
 
         goalDatabase = GoalDatabase.getInstance(AddRewardActivity.this);
 
@@ -50,7 +51,7 @@ public class AddRewardActivity extends AppCompatActivity {
             //save_butt.setText(reward.getReward_name());
             et_title.setText(reward.getReward_name());
             et_content.setText(reward.getDescription());
-            et_points.setText(Integer.toString(reward.getPoints()));
+            et_points.setSelection(reward.getPoints());
         }
 
         save_butt.setOnClickListener(new View.OnClickListener() {
@@ -63,13 +64,11 @@ public class AddRewardActivity extends AppCompatActivity {
                     if (et_title.getText() != null) {
                         reward.setReward_name(et_title.getText().toString());
                     }
-                    if (et_points.getText() != null) {
-                        reward.setPoints( Integer.parseInt(et_points.getText().toString()));
-                    }
                     goalDatabase.getRewardDao().updateReward(reward);
                     setResult(reward, 2);
                 }
                 else {
+                    points = et_points.getSelectedItemPosition() * 100;
                     String rewardDescription;
                     String rewardName;
                     if (et_content.getText() != null) {
@@ -79,14 +78,18 @@ public class AddRewardActivity extends AppCompatActivity {
                     if (et_content.getText() != null && et_title.getText() != null && et_points != null) {
                         reward = new Reward(et_title.getText().toString(),
                                 et_content.getText().toString(),
-                                Integer.parseInt(et_points.getText().toString()) );
-                        Log.e("points", "oncreate: " +Integer.parseInt(et_points.getText().toString()) );
+                                points );
+                        Log.e("points", "oncreate: " + points );
                         new InsertTask(AddRewardActivity.this, reward).execute();
                     }
                 }
             }
 
         });
+        //Spinner spinner = findViewById(R.id.difficulty_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.difficulty_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        et_points.setAdapter(adapter);
     }
     private void setResult(Reward reward, int flag){
         setResult(flag,new Intent().putExtra("Reward", reward));
