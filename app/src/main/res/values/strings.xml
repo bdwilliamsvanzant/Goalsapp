@@ -13,7 +13,6 @@
     <string name="add_reward_button">Add Reward</string>
     <string name="but_edit_reward">Edit Reward</string>
     <string-array name="difficulty_array">
-        <item>Select a Difficulty</item>
         <item>Easy</item>
         <item>Medium</item>
         <item>Hard</item>
