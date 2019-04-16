@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.goals.DAOs.GoalDao;
 import com.example.goals.DAOs.RewardDao;
+import com.example.goals.DAOs.UserDao;
 import com.example.goals.Goal;
 import com.example.goals.Reward;
 import com.example.goals.User;
