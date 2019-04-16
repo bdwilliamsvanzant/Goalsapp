@@ -20,6 +20,12 @@ public interface GoalDao{
     @Query("SELECT * FROM " + Constants.TABLE_NAME_GOAL + " WHERE Complete = 0")
     List<Goal> getGoals();
 
+    @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_GOAL + " WHERE Complete = 0")
+    int getActiveGoals();
+
+    @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_GOAL + " WHERE Complete = 1")
+    int getCompletedGoals();
+
     @Insert
     long insertGoal(Goal goal);
 

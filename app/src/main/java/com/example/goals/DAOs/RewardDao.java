@@ -21,6 +21,12 @@ public interface RewardDao {
     @Query("SELECT * FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 0")
     List<Reward> getRewards();
 
+    @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 0")
+    int getActiveRewards();
+
+    @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 1")
+    int getCompletedRewards();
+
     @Insert
     long insertReward(Reward reward);
 
