@@ -39,6 +39,9 @@ public class Goal implements Serializable {
     @ColumnInfo(name = "Complete")
     private boolean complete;
 
+    @ColumnInfo(name = "Complete Date")
+    private long completeDate;
+
     @Ignore
     public Goal(){}
 
@@ -55,6 +58,7 @@ public class Goal implements Serializable {
         this.points = points;
         this.start_time = start_time;
         this.end_time = end_time;
+        this.completeDate = 0;
     }
 
     public long getGoal_id() {
@@ -110,6 +114,10 @@ public class Goal implements Serializable {
     public void setComplete (boolean isComplete) { this.complete = isComplete; }
 
     public boolean getComplete (){ return complete; }
+
+    public void setCompleteDate (long date) { this.completeDate = date; }
+
+    public long getCompleteDate (){ return completeDate; }
 
     @Override
     public boolean equals(Object o){

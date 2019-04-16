@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "9db6c44848736263d6ed5ea82bdd5bee",
+    "identityHash": "1547ef35b113c8fc76ce88c0bf4f31a1",
     "entities": [
       {
         "tableName": "goals",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`goal_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Goal Name` TEXT, `Description` TEXT, `Difficulty` INTEGER NOT NULL, `Start Date` TEXT, `End Date` TEXT, `Points` INTEGER NOT NULL, `Time Span` TEXT, `Complete` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`goal_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Goal Name` TEXT, `Description` TEXT, `Difficulty` INTEGER NOT NULL, `Start Date` TEXT, `End Date` TEXT, `Points` INTEGER NOT NULL, `Time Span` TEXT, `Complete` INTEGER NOT NULL, `Complete Date` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "goal_id",
@@ -61,6 +61,12 @@
             "columnName": "Complete",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "completeDate",
+            "columnName": "Complete Date",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -74,7 +80,7 @@
       },
       {
         "tableName": "rewards",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reward_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Reward Name` TEXT, `Description` TEXT, `Points` INTEGER NOT NULL, `End Date` TEXT, `Complete` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reward_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Reward Name` TEXT, `Description` TEXT, `Points` INTEGER NOT NULL, `End Date` INTEGER NOT NULL, `Complete` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "reward_id",
@@ -103,8 +109,8 @@
           {
             "fieldPath": "end_time",
             "columnName": "End Date",
-            "affinity": "TEXT",
-            "notNull": false
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "complete",
@@ -158,7 +164,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9db6c44848736263d6ed5ea82bdd5bee\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1547ef35b113c8fc76ce88c0bf4f31a1\")"
     ]
   }
 }

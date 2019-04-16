@@ -26,7 +26,7 @@ public class Reward implements Serializable {
     private int points;
 
     @ColumnInfo(name = "End Date")
-    private String end_time;
+    private long end_time;
 
     @ColumnInfo(name = "Complete")
     private boolean complete;
@@ -63,9 +63,9 @@ public class Reward implements Serializable {
 
     public void setPoints(int points){ this.points = points; }
 
-    public String getEnd_time() { return end_time; }
+    public long getEnd_time() { return end_time; }
+    public void setEnd_time(long end_time) { this.end_time = end_time; }
 
-    public void setEnd_time(String end_time) { this.end_time = end_time; }
     public void setComplete (boolean isComplete) { this.complete = isComplete; }
     public boolean getComplete (){ return complete; }
 

@@ -1,10 +1,12 @@
 package com.example.goals.DatabaseActivities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -141,10 +144,19 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                if(Rewards.get(pos).getPoints() < goalDatabase.getRewardDao().getCurrentPoints()){
-                                Rewards.get(pos).setComplete(true);
-                                goalDatabase.getRewardDao().updateReward(Rewards.get(pos));
-                                Rewards.remove(pos);
+                                Log.i("rewardListActivity","currentPoints="+goalDatabase.getRewardDao().getCurrentPoints());
+                                if(Rewards.get(pos).getPoints() <= goalDatabase.getRewardDao().getCurrentPoints()){
+                                    Rewards.get(pos).setComplete(true);
+                                    Date date = new Date();
+                                    Rewards.get(pos).setEnd_time(date.getTime());
+                                    goalDatabase.getRewardDao().updateReward(Rewards.get(pos));
+                                    Rewards.remove(pos);
+                                }
+                                else{
+                                    new AlertDialog.Builder(getApplicationContext())
+                                            //.setTitle("Delete entry")
+                                            .setMessage("YOU DO NOT HAVE ENOUGH POINTS FOR THIS REWARD")
+                                            .show();
                                 }
                                 recyclerView.setAdapter(RewardsAdapter);
                                 break;

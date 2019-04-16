@@ -68,7 +68,7 @@ public class AddRewardActivity extends AppCompatActivity {
                     setResult(reward, 2);
                 }
                 else {
-                    points = et_points.getSelectedItemPosition() * 100;
+                    points = (et_points.getSelectedItemPosition()+1) * 100;
                     String rewardDescription;
                     String rewardName;
                     if (et_content.getText() != null) {

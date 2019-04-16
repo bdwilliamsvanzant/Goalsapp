@@ -13,7 +13,7 @@ import androidx.room.Update;
 
 @Dao
 public interface GoalDao{
-    @Query("SELECT * FROM " + Constants.TABLE_NAME_GOAL + "\n WHERE `Complete` AND `End Date` = (SELECT MAX(`End Date`) FROM "+ Constants.TABLE_NAME_GOAL + ");" )
+    @Query("SELECT * FROM " + Constants.TABLE_NAME_GOAL + "\n WHERE `Complete` AND `Complete Date` = (SELECT MAX(`Complete Date`) FROM "+ Constants.TABLE_NAME_GOAL + ");" )
     //@Query("SELECT * FROM " + Constants.TABLE_NAME_GOAL + "\n WHERE  `End Date` = (SELECT MAX(`End Date`) FROM "+ Constants.TABLE_NAME_GOAL + ");" )
     Goal getMostRecentGoal();
 

@@ -17,6 +17,7 @@
 
         <activity
             android:name=".DatabaseActivities.GoalListActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +27,7 @@
         </activity>
         <activity
             android:name=".DatabaseActivities.RewardListActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,21 +35,25 @@
         </activity>
         <activity
             android:name=".DatabaseActivities.UserStatsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name= ".DatabaseActivities.AddGoalActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".DatabaseActivities.SpinnerActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".DatabaseActivities.AddGoalActivity">
         </activity>
         <activity
             android:name=".DatabaseActivities.AddRewardActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".DatabaseActivities.RewardListActivity">
         </activity>
     </application>

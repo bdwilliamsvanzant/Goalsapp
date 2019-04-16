@@ -115,6 +115,7 @@ public class AddGoalActivity extends AppCompatActivity {
                         et_startDate.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
                     }
                 }, year, month, day);
+
                 datepicker.show();
             }
         });
@@ -132,13 +133,16 @@ public class AddGoalActivity extends AppCompatActivity {
 
 
                     try {
-                        Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(et_startDate.getText().toString());                    datepicker = new DatePickerDialog(AddGoalActivity.this, new DatePickerDialog.OnDateSetListener() {
+                        Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(et_startDate.getText().toString());
+                        Date newDate = new Date();
+                        long current = temp.getTime() > newDate.getTime() ? temp.getTime(): newDate.getTime();
+                        datepicker = new DatePickerDialog(AddGoalActivity.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 et_endDate.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
                             }
                         }, year, month, day);
-                        datepicker.getDatePicker().setMinDate(temp.getTime());
+                        datepicker.getDatePicker().setMinDate(current);
                         datepicker.show();
                     }
                     catch (ParseException e) {              // Insert this block.

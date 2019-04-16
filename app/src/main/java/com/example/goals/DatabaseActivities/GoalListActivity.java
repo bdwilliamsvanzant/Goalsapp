@@ -19,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -141,6 +142,8 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
                         switch (which) {
                             case 0:
                                 goals.get(pos).setComplete(true);
+                                Date date = new Date();
+                                goals.get(pos).setCompleteDate(date.getTime());
                                 goalDatabase.getGoalDao().updateGoal(goals.get(pos));
                                 goals.remove(pos);
                                 recyclerView.setAdapter(goalsAdapter);
