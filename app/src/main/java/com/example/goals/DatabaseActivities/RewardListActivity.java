@@ -141,10 +141,15 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
+                                if(Rewards.get(pos).getPoints() < goalDatabase.getRewardDao().getCurrentPoints()){
                                 Rewards.get(pos).setComplete(true);
                                 goalDatabase.getRewardDao().updateReward(Rewards.get(pos));
                                 Rewards.remove(pos);
                                 recyclerView.setAdapter(RewardsAdapter);
+                                }
+                                else{
+                                    recyclerView.setAdapter(RewardsAdapter);
+                                }
                                 break;
                             case 1:
                                 RewardListActivity.this.pos = pos;
