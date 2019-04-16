@@ -14,8 +14,10 @@ import androidx.room.Update;
 @Dao
 public interface UserDao {
     @Query("SELECT * FROM " + Constants.TABLE_NAME_USER)
-
     List<Reward> getRewards();
+
+    @Query("SELECT SUM(points) From " + Constants.TABLE_NAME_USER)
+    int getCurrentPoints();
 
     @Insert
     long insertReward(Reward reward);

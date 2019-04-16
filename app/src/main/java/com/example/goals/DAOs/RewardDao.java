@@ -27,6 +27,9 @@ public interface RewardDao {
     @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 1")
     int getCompletedRewards();
 
+    @Query("SELECT SUM(points) FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 1")
+    int getSpentPoints();
+
     @Insert
     long insertReward(Reward reward);
 
