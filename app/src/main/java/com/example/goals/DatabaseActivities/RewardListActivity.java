@@ -153,10 +153,16 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
                                     Rewards.remove(pos);
                                 }
                                 else{
-                                    new AlertDialog.Builder(getApplicationContext())
-                                            //.setTitle("Delete entry")
-                                            .setMessage("YOU DO NOT HAVE ENOUGH POINTS FOR THIS REWARD")
-                                            .show();
+                                    AlertDialog alertDialog = new AlertDialog.Builder(RewardListActivity.this).create();
+                                    alertDialog.setTitle("Alert");
+                                    alertDialog.setMessage("YOU DO NOT HAVE ENOUGH POINTS FOR THIS REWARD");
+                                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                    alertDialog.show();
                                 }
                                 recyclerView.setAdapter(RewardsAdapter);
                                 break;
