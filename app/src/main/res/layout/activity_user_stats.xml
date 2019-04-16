@@ -56,6 +56,19 @@
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:paddingBottom="?attr/actionBarSize"
+            android:fillViewport="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="?attr/actionBarSize"
+        android:orientation="vertical">
         <androidx.cardview.widget.CardView
             android:id="@+id/Goals"
             android:layout_width="match_parent"
@@ -235,8 +248,8 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
-
+    </LinearLayout>
+    </ScrollView>
     </LinearLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
     android:id="@+id/navigation"
