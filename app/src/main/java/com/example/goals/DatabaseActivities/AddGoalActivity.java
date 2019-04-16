@@ -18,7 +18,10 @@ import com.example.goals.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.lang.ref.WeakReference;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -119,18 +122,31 @@ public class AddGoalActivity extends AppCompatActivity {
         endDate_butt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
+                if(!et_startDate.getText().toString().equals("")){
 
-                datepicker = new DatePickerDialog(AddGoalActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        et_endDate.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                    final Calendar cldr = Calendar.getInstance();
+
+                    int day = cldr.get(Calendar.DAY_OF_MONTH);
+                    int month = cldr.get(Calendar.MONTH);
+                    int year = cldr.get(Calendar.YEAR);
+
+
+                    try {
+                        Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(et_startDate.getText().toString());                    datepicker = new DatePickerDialog(AddGoalActivity.this, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                et_endDate.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                            }
+                        }, year, month, day);
+                        datepicker.getDatePicker().setMinDate(temp.getTime());
+                        datepicker.show();
                     }
-                }, year, month, day);
-                datepicker.show();
+                    catch (ParseException e) {              // Insert this block.
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                }
             }
         });
 

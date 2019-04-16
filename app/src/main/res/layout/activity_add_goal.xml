@@ -48,6 +48,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_startDate"
             android:layout_width="wrap_content"
+            android:editable="false"
+            android:focusable="false"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Enter Start Date:"></com.google.android.material.textfield.TextInputEditText>
@@ -69,6 +71,8 @@
             android:id="@+id/et_endDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:editable="false"
+            android:focusable="false"
             android:ems="10"
             android:hint="Enter End Date:" />
 
