@@ -69,9 +69,7 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
             if (Rewards != null && Rewards.size() > 0) {
                 activityReference.get().Rewards.clear();
                 activityReference.get().Rewards.addAll(Rewards);
-
                 activityReference.get().RewardsAdapter.notifyDataSetChanged();
-
             }
         }
     }

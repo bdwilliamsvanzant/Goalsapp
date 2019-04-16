@@ -91,8 +91,6 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
                     case R.id.navigation_goals:
                         break;
                     case R.id.navigation_rewards:
-                       // BottomNavigationView.setItemTextColor();
-                       // BottomNavigationView.setItemIconTintList(null);
                         Intent intent1 = new Intent(GoalListActivity.this, RewardListActivity.class);
                         startActivity(intent1);
                         break;
@@ -145,19 +143,20 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
                                 goals.get(pos).setComplete(true);
                                 goalDatabase.getGoalDao().updateGoal(goals.get(pos));
                                 goals.remove(pos);
+                                recyclerView.setAdapter(goalsAdapter);
                                 break;
                             case 1:
                                 GoalListActivity.this.pos = pos;
                                 startActivityForResult(
                                         new Intent(GoalListActivity.this, AddGoalActivity.class).putExtra("goal", goals.get(pos)), 100);
+                                recyclerView.setAdapter(goalsAdapter);
                                 break;
                             case 2:
                                 goalDatabase.getGoalDao().deleteGoal(goals.get(pos));
                                 goals.remove(pos);
+                                recyclerView.setAdapter(goalsAdapter);
                                 break;
                         }
-
-
                     }
                 }).show();
     }
