@@ -186,7 +186,7 @@ public class UserStatsActivity  extends AppCompatActivity {
             //set UI to goal values
             TextView numActiveGoalsTextView = rootView.findViewById(R.id.total_active_goals);
 
-            numActiveGoalsTextView.setText( "# Active Goals: "+ numActiveGoals);
+            numActiveGoalsTextView.setText( "Active Goals: "+ numActiveGoals);
 
         }
     }
@@ -216,7 +216,7 @@ public class UserStatsActivity  extends AppCompatActivity {
             //set UI to goal values
             TextView numActiveGoalsTextView = rootView.findViewById(R.id.total_completed_goals);
 
-            numActiveGoalsTextView.setText( "# Completed Goals: "+ numCompletedGoals);
+            numActiveGoalsTextView.setText( "Completed Goals: "+ numCompletedGoals);
 
         }
     }
@@ -246,7 +246,7 @@ public class UserStatsActivity  extends AppCompatActivity {
             //set UI to goal values
             TextView numActiveGoalsTextView = rootView.findViewById(R.id.total_unearned_rewards);
 
-            numActiveGoalsTextView.setText( "# Unearned Rewards: "+ numUnearnedRewards);
+            numActiveGoalsTextView.setText( "Unearned Rewards: "+ numUnearnedRewards);
 
         }
     }
@@ -276,7 +276,7 @@ public class UserStatsActivity  extends AppCompatActivity {
             //set UI to goal values
             TextView numActiveGoalsTextView = rootView.findViewById(R.id.total_earned_rewards);
 
-            numActiveGoalsTextView.setText( "# Unearned Rewards: "+ numEarnedRewards);
+            numActiveGoalsTextView.setText( "Earned Rewards: "+ numEarnedRewards);
 
         }
     }
