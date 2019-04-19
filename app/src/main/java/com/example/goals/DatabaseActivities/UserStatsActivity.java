@@ -18,6 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.lang.ref.WeakReference;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -56,6 +57,19 @@ public class UserStatsActivity  extends AppCompatActivity {
         });
         nav.setSelectedItemId(R.id.navigation_stats);
         display();
+
+        if (getSupportActionBar() != null) {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayUseLogoEnabled(false);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setDisplayOptions(actionBar.DISPLAY_SHOW_CUSTOM);
+            View cView = getLayoutInflater().inflate(R.layout.actionbar, null);
+            actionBar.setCustomView(cView);
+
+        }
     }
 
     private void initializeViews() {

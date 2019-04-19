@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -106,6 +107,18 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
         });
         nav.setSelectedItemId(R.id.navigation_rewards);
         displayList();
+        if (getSupportActionBar() != null) {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayUseLogoEnabled(false);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setDisplayOptions(actionBar.DISPLAY_SHOW_CUSTOM);
+            View cView = getLayoutInflater().inflate(R.layout.actionbar, null);
+            actionBar.setCustomView(cView);
+
+        }
     }
 
     private void initializeViews() {

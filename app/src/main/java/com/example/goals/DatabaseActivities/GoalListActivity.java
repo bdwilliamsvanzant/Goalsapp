@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,8 +29,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.app.ActionBar;
+import 	android.view.Gravity;
 
 public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.OnGoalItemClick {
+
 
     private RecyclerView recyclerView;
     private GoalDatabase goalDatabase;
@@ -78,8 +82,11 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         initializeViews();
         BottomNavigationView nav = findViewById(R.id.navigation);
         Menu menu = nav.getMenu();
@@ -105,6 +112,19 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
         });
         nav.setSelectedItemId(R.id.navigation_goals);
         displayList();
+
+        if (getSupportActionBar() != null) {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayUseLogoEnabled(false);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setDisplayOptions(actionBar.DISPLAY_SHOW_CUSTOM);
+            View cView = getLayoutInflater().inflate(R.layout.actionbar, null);
+            actionBar.setCustomView(cView);
+
+        }
     }
 
     private void initializeViews() {
