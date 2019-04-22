@@ -66,7 +66,12 @@ public class AddGoalActivity extends AppCompatActivity {
         save_butt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (update) {
+                    if(et_content.getText().toString().equals("") || et_title.getText().toString().equals("") || et_startDate.getText().toString().equals("") || et_endDate.getText().toString().equals("") ){
+                        fillcounter += 1;
+                    }
+                    if(fillcounter == 0){
                     if (et_content.getText() != null) {
                         goal.setContent(et_content.getText().toString());
                     }
@@ -81,6 +86,20 @@ public class AddGoalActivity extends AppCompatActivity {
                     }
                     goalDatabase.getGoalDao().updateGoal(goal);
                     setResult(goal, 2);
+                }
+                else{
+                    AlertDialog alertDialog = new AlertDialog.Builder(AddGoalActivity.this).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage("Fill in all fields");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                    fillcounter = 0;
+                }
                 } else {
                     points = (difficulty.getSelectedItemPosition()+1) * 100;
 

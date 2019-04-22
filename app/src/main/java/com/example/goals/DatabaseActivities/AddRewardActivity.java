@@ -59,6 +59,11 @@ public class AddRewardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (update) {
+
+                    if(et_title.getText().toString().equals("") || et_content.getText().toString().equals("")){
+                        fillcounter += 1;
+                    }
+                    if(fillcounter == 0){
                     if (et_content.getText() != null) {
                         reward.setDescription(et_content.getText().toString());
                     }
@@ -67,6 +72,20 @@ public class AddRewardActivity extends AppCompatActivity {
                     }
                     goalDatabase.getRewardDao().updateReward(reward);
                     setResult(reward, 2);
+                    }
+                    else{
+                        AlertDialog alertDialog = new AlertDialog.Builder(AddRewardActivity.this).create();
+                        alertDialog.setTitle("Alert");
+                        alertDialog.setMessage("Fill in all fields");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                        fillcounter = 0;
+                    }
                 }
                 else {
                     points = (et_points.getSelectedItemPosition()+1) * 100;
