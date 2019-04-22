@@ -2,6 +2,7 @@ package com.example.goals.DatabaseActivities;
 
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -31,6 +33,7 @@ public class AddRewardActivity extends AppCompatActivity {
     private Reward reward;
     private boolean update;
     private int points;
+    private int fillcounter = 0;
 
 
     @Override
@@ -46,9 +49,7 @@ public class AddRewardActivity extends AppCompatActivity {
         Button save_butt = findViewById(R.id.but_save);
         if ((reward = (Reward) getIntent().getSerializableExtra("reward")) != null)
         {
-            //getSupportActionBar().setTitle("Update Reward");
             update = true;
-            //save_butt.setText(reward.getReward_name());
             et_title.setText(reward.getReward_name());
             et_content.setText(reward.getDescription());
             et_points.setSelection(reward.getPoints());
@@ -75,12 +76,28 @@ public class AddRewardActivity extends AppCompatActivity {
                         rewardDescription = et_content.getText().toString();
                     }
                     //String content, String reward_name, int difficulty, int points, String start_time, String end_time
-                    if (et_content.getText() != null && et_title.getText() != null && et_points != null) {
+                    if(et_title.getText().toString().equals("") || et_content.getText().toString().equals("")){
+                        fillcounter += 1;
+                    }
+                    if (et_content.getText() != null && et_title.getText() != null && et_points != null && fillcounter == 0) {
                         reward = new Reward(et_title.getText().toString(),
                                 et_content.getText().toString(),
                                 points );
                         Log.e("points", "oncreate: " + points );
                         new InsertTask(AddRewardActivity.this, reward).execute();
+                    }
+                    else{
+                        AlertDialog alertDialog = new AlertDialog.Builder(AddRewardActivity.this).create();
+                        alertDialog.setTitle("Alert");
+                        alertDialog.setMessage("Fill in all fields");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                        fillcounter = 0;
                     }
                 }
             }
