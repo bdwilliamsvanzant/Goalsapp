@@ -2,6 +2,7 @@ package com.example.goals.DatabaseActivities;
 
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -36,7 +38,7 @@ public class AddGoalActivity extends AppCompatActivity {
     private boolean update;
     private int points;
     private Spinner difficulty;
-
+    private int fillcounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -83,8 +85,10 @@ public class AddGoalActivity extends AppCompatActivity {
                     points = (difficulty.getSelectedItemPosition()+1) * 100;
 
                     //String content, String goal_name, int difficulty, int points, String start_time, String end_time
-
-                    if (et_content.getText() != null && et_title.getText() != null && et_startDate.getText() != null && et_endDate.getText() != null) {
+                if(et_content.getText().toString().equals("") || et_title.getText().toString().equals("") || et_startDate.getText().toString().equals("") || et_endDate.getText().toString().equals("") ){
+                    fillcounter += 1;
+                }
+                if (et_content.getText() != null && et_title.getText() != null && et_startDate.getText() != null && et_endDate.getText() != null && fillcounter == 0) {
                         goal = new Goal(et_content.getText().toString(),
                                 et_title.getText().toString(),
                                 difficulty.getSelectedItemPosition(),
@@ -93,6 +97,19 @@ public class AddGoalActivity extends AppCompatActivity {
                                 et_endDate.getText().toString());
                         new InsertTask(AddGoalActivity.this, goal).execute();
                     }
+                    else{
+                    AlertDialog alertDialog = new AlertDialog.Builder(AddGoalActivity.this).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage("Fill in all fields");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                    fillcounter = 0;
+                }
                 }
             }
 
@@ -158,8 +175,6 @@ public class AddGoalActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.difficulty_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
-
     }
 
     private void setResult(Goal goal, int flag){
