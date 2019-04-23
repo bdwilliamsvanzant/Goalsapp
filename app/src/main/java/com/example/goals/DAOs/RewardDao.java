@@ -31,9 +31,6 @@ public interface RewardDao {
     @Query("SELECT SUM(points) FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 1")
     int getSpentPoints();
 
-    @Query("SELECT SUM(G.points - R.points) FROM "+ Constants.TABLE_NAME_GOAL + " AS G," + Constants.TABLE_NAME_REWARD + " AS R WHERE G.Complete = 1 AND R.Complete = 1")
-    int getCurrentPoints();
-
     @Insert
     long insertReward(Reward reward);
 

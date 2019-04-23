@@ -157,8 +157,7 @@ public class RewardListActivity extends AppCompatActivity implements RewardsAdap
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                Log.i("rewardListActivity","currentPoints="+goalDatabase.getRewardDao().getCurrentPoints());
-                                if(Rewards.get(pos).getPoints() <= goalDatabase.getRewardDao().getCurrentPoints()){
+                                if(Rewards.get(pos).getPoints() <= (goalDatabase.getGoalDao().getTotalPointsEarned()-goalDatabase.getRewardDao().getSpentPoints())){
                                     Rewards.get(pos).setComplete(true);
                                     Date date = new Date();
                                     Rewards.get(pos).setEnd_time(date.getTime());
