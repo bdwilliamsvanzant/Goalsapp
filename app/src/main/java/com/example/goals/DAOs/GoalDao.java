@@ -19,8 +19,8 @@ public interface GoalDao{
     @Query("SELECT * FROM " + Constants.TABLE_NAME_GOAL + " WHERE Complete = 0 AND (\"End Date\"+1000*60*60*24) > :temp")
     List<Goal> getGoals(long temp);
 
-    @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_GOAL + " WHERE Complete = 0")
-    int getActiveGoals();
+    @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_GOAL + " WHERE Complete = 0  AND (\"End Date\"+1000*60*60*24) > :temp")
+    int getActiveGoals(long temp);
 
     @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_GOAL + " WHERE Complete = 1")
     int getCompletedGoals();

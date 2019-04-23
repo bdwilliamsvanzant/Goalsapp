@@ -205,8 +205,9 @@ public class UserStatsActivity  extends AppCompatActivity {
 
         @Override
         protected Integer doInBackground(Void... voids) {
+            Date temp= new Date();
             if (activityReference.get() != null)
-                return activityReference.get().goalDatabase.getGoalDao().getActiveGoals();
+                return activityReference.get().goalDatabase.getGoalDao().getActiveGoals(temp.getTime());
             else
                 return 0;
         }
