@@ -1,7 +1,9 @@
 package com.example.goals.DatabaseActivities;
 
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -16,6 +18,8 @@ import android.widget.Spinner;
 import com.example.goals.Goal;
 import com.example.goals.Database.GoalDatabase;
 import com.example.goals.R;
+import com.example.goals.util.OtherReceiver;
+import com.example.goals.util.Receiver;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.lang.ref.WeakReference;
@@ -28,6 +32,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.app.Activity;
+import android.os.SystemClock;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class AddGoalActivity extends AppCompatActivity {
 
@@ -133,6 +147,8 @@ public class AddGoalActivity extends AppCompatActivity {
                 }
                 if (et_content.getText() != null && et_title.getText() != null && et_startDate.getText() != null && et_endDate.getText() != null && fillcounter == 0) {
                         try {
+                            createNotification();
+
                             Date start = new SimpleDateFormat("MM/dd/yyyy").parse(et_startDate.getText().toString());
                             Date end = new SimpleDateFormat("MM/dd/yyyy").parse(et_endDate.getText().toString());
                             goal = new Goal(et_content.getText().toString(),
@@ -231,6 +247,37 @@ public class AddGoalActivity extends AppCompatActivity {
     private void setResult(Goal goal, int flag){
         setResult(flag, new Intent().putExtra("Goal", goal));
         finish();
+    }
+
+    private void createNotification(){
+//        Log.i("createNotification","entered");
+//
+//        Calendar sevendayalarm = Calendar.getInstance();
+//        sevendayalarm.add(Calendar.DATE, 0);
+//
+//        Intent intent = new Intent(this, Receiver.class);
+//
+//        //1- requestCode is used to get the same pending intent later on (for cancelling etc)
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+//        Log.i("createNotification","about to create AlarmMANAGER");
+//        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
+//        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 100,pendingIntent);
+
+
+
+
+        Log.i("createNotification","complete functia;dgjadfj");
+
+        Notification notification = new Notification();
+
+        Intent notificationIntent = new Intent(this, OtherReceiver.class);
+        notificationIntent.putExtra(OtherReceiver.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(OtherReceiver.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        long futureInMillis = SystemClock.elapsedRealtime() + 100;
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
     }
 
     private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
