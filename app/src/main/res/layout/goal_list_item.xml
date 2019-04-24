@@ -16,7 +16,7 @@
         <LinearLayout
             android:background="?android:attr/selectableItemBackground"
             android:orientation="vertical"
-            android:layout_margin="2dp"
+            android:layout_margin="1dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
