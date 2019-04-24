@@ -49,7 +49,7 @@ public class UserStatsAdapter extends RecyclerView.Adapter<UserStatsAdapter.Goal
 
         TextView textViewContent;
         TextView textViewTitle;
-        TextView textViewDifficulty;
+     //   TextView textViewDifficulty;
         TextView textViewStartTime;
         TextView textViewEndTime;
         TextView textViewPoints;
@@ -59,7 +59,7 @@ public class UserStatsAdapter extends RecyclerView.Adapter<UserStatsAdapter.Goal
             itemView.setOnClickListener(this);
             textViewContent = itemView.findViewById(R.id.item_text);
             textViewTitle = itemView.findViewById(R.id.goal_name);
-            textViewDifficulty = itemView.findViewById(R.id.tv_goal_difficulty);
+       //     textViewDifficulty = itemView.findViewById(R.id.tv_goal_difficulty);
             textViewStartTime = itemView.findViewById(R.id.tv_goal_startTime);
             textViewEndTime = itemView.findViewById(R.id.tv_goal_endTime);
             textViewPoints = itemView.findViewById(R.id.tv_goal_points);

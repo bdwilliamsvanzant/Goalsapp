@@ -16,6 +16,8 @@ import com.example.goals.Reward;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.ref.WeakReference;
+import java.util.Calendar;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -25,6 +27,14 @@ import androidx.appcompat.widget.Toolbar;
 public class UserStatsActivity  extends AppCompatActivity {
 
     private GoalDatabase goalDatabase;
+
+    private String longToString(long temp)
+    {
+        Date time = new Date(temp);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(time);
+        return (Integer.toString(cal.get(Calendar.MONTH)+1) +"/" + Integer.toString(cal.get(Calendar.DAY_OF_MONTH)) + "/" + Integer.toString(cal.get(Calendar.YEAR)));
+    }
 
 
 
@@ -111,6 +121,14 @@ public class UserStatsActivity  extends AppCompatActivity {
         private WeakReference<UserStatsActivity> activityReference;
         private View rootView;
 
+        private String longToString(long temp)
+        {
+            Date time = new Date(temp);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(time);
+            return (Integer.toString(cal.get(Calendar.MONTH)+1) +"/" + Integer.toString(cal.get(Calendar.DAY_OF_MONTH)) + "/" + Integer.toString(cal.get(Calendar.YEAR)));
+        }
+
 
         public RetrieveGoal(UserStatsActivity context, View rootView){
             activityReference = new WeakReference<>(context);
@@ -134,10 +152,10 @@ public class UserStatsActivity  extends AppCompatActivity {
 
                 goalTextView.setText(goal.getGoal_name()+"\n"
                         +goal.getContent() +"\n"
-                        +goal.getDifficulty()+"\n"
+                 //       +goal.getDifficulty()+"\n"
                         +goal.getPoints()+"\n"
-                        +goal.getStart_time()+"\n"
-                        +goal.getEnd_time()
+                        + longToString(goal.getStart_time())+"\n"
+                        + longToString(goal.getEnd_time())
                 );
             }
         }
