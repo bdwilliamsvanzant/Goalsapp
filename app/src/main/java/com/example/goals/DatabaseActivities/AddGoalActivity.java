@@ -40,6 +40,30 @@ public class AddGoalActivity extends AppCompatActivity {
     private Spinner difficulty;
     private int fillcounter = 0;
 
+    private String longToString(long temp)
+    {
+        Date time = new Date(temp);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(time);
+        return (Integer.toString(cal.get(Calendar.MONTH)+1) +"/" + Integer.toString(cal.get(Calendar.DAY_OF_MONTH)) + "/" + Integer.toString(cal.get(Calendar.YEAR)));
+    }
+
+    private long stringToLong(String temp)
+    {
+        Date time = new Date();
+        try{
+            Date time1 = new SimpleDateFormat("MM/dd/yyyy").parse(temp);
+            time.setTime(time1.getTime());
+
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+
+        return time.getTime();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -58,8 +82,8 @@ public class AddGoalActivity extends AppCompatActivity {
             update = true;
             et_title.setText(goal.getGoal_name());
             et_content.setText(goal.getContent());
-            et_startDate.setText(goal.getStart_time());
-            et_endDate.setText(goal.getEnd_time());
+            et_startDate.setText(longToString(goal.getStart_time()));
+            et_endDate.setText(longToString(goal.getEnd_time()));
             difficulty.setSelection(goal.getDifficulty());
         }
 
@@ -79,10 +103,10 @@ public class AddGoalActivity extends AppCompatActivity {
                         goal.setGoal_name(et_title.getText().toString());
                     }
                     if (et_startDate.getText() != null) {
-                        goal.setStart_time(et_startDate.getText().toString());
+                        goal.setStart_time(stringToLong(et_startDate.getText().toString()));
                     }
                     if (et_endDate.getText() != null) {
-                        goal.setEnd_time(et_endDate.getText().toString());
+                        goal.setEnd_time(stringToLong(et_endDate.getText().toString()));
                     }
                     goalDatabase.getGoalDao().updateGoal(goal);
                     setResult(goal, 2);
@@ -108,13 +132,21 @@ public class AddGoalActivity extends AppCompatActivity {
                     fillcounter += 1;
                 }
                 if (et_content.getText() != null && et_title.getText() != null && et_startDate.getText() != null && et_endDate.getText() != null && fillcounter == 0) {
-                        goal = new Goal(et_content.getText().toString(),
-                                et_title.getText().toString(),
-                                difficulty.getSelectedItemPosition(),
-                                points,
-                                et_startDate.getText().toString(),
-                                et_endDate.getText().toString());
-                        new InsertTask(AddGoalActivity.this, goal).execute();
+                        try {
+                            Date start = new SimpleDateFormat("MM/dd/yyyy").parse(et_startDate.getText().toString());
+                            Date end = new SimpleDateFormat("MM/dd/yyyy").parse(et_endDate.getText().toString());
+                            goal = new Goal(et_content.getText().toString(),
+                                    et_title.getText().toString(),
+                                    difficulty.getSelectedItemPosition(),
+                                    points,
+                                    start.getTime(),
+                                    end.getTime());
+                            new InsertTask(AddGoalActivity.this, goal).execute();
+                        }
+                        catch (ParseException e)
+                        {
+                            e.printStackTrace();
+                        }
                     }
                     else{
                     AlertDialog alertDialog = new AlertDialog.Builder(AddGoalActivity.this).create();
@@ -148,7 +180,7 @@ public class AddGoalActivity extends AppCompatActivity {
                 datepicker = new DatePickerDialog(AddGoalActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        et_startDate.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                        et_startDate.setText((month + 1) + "/" + dayOfMonth + "/" + year);
                     }
                 }, year, month, day);
 
@@ -169,13 +201,13 @@ public class AddGoalActivity extends AppCompatActivity {
 
 
                     try {
-                        Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(et_startDate.getText().toString());
+                        Date temp = new SimpleDateFormat("MM/dd/yyyy").parse(et_startDate.getText().toString());
                         Date newDate = new Date();
                         long current = temp.getTime() > newDate.getTime() ? temp.getTime(): newDate.getTime();
                         datepicker = new DatePickerDialog(AddGoalActivity.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                et_endDate.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                                et_endDate.setText((month + 1)  + "/" + dayOfMonth + "/" + year);
                             }
                         }, year, month, day);
                         datepicker.getDatePicker().setMinDate(current);

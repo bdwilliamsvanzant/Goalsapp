@@ -17,8 +17,8 @@ public interface GoalDao{
     //@Query("SELECT * FROM " + Constants.TABLE_NAME_GOAL + "\n WHERE  `End Date` = (SELECT MAX(`End Date`) FROM "+ Constants.TABLE_NAME_GOAL + ");" )
     Goal getMostRecentGoal();
 
-    @Query("SELECT * FROM " + Constants.TABLE_NAME_GOAL + " WHERE Complete = 0")
-    List<Goal> getGoals();
+    @Query("SELECT * FROM " + Constants.TABLE_NAME_GOAL + " WHERE Complete = 0 AND \"End Date\" > :temp")
+    List<Goal> getGoals(long temp);
 
     @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_GOAL + " WHERE Complete = 0")
     int getActiveGoals();

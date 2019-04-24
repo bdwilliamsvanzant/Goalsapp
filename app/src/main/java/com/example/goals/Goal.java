@@ -25,10 +25,10 @@ public class Goal implements Serializable {
     private int difficulty;
 
     @ColumnInfo(name = "Start Date")
-    private String start_time;
+    private long start_time;
 
     @ColumnInfo(name = "End Date")
-    private String end_time;
+    private long end_time;
 
     @ColumnInfo(name = "Points")
     private int points;
@@ -51,7 +51,7 @@ public class Goal implements Serializable {
         this.content = content;
     }*/
 
-    public Goal(String content, String goal_name, int difficulty, int points, String start_time, String end_time) {
+    public Goal(String content, String goal_name, int difficulty, int points, long start_time, long end_time) {
         this.goal_name = goal_name;
         this.content = content;
         this.difficulty = difficulty;
@@ -91,13 +91,13 @@ public class Goal implements Serializable {
         this.difficulty = difficulty;
     }
 
-    public String getStart_time() { return start_time; }
+    public long getStart_time() { return start_time; }
 
-    public void setStart_time(String start_time) { this.start_time = start_time; }
+    public void setStart_time(long start_time) { this.start_time = start_time; }
 
-    public String getEnd_time() { return end_time; }
+    public long getEnd_time() { return end_time; }
 
-    public void setEnd_time(String end_time) { this.end_time = end_time; }
+    public void setEnd_time(long end_time) { this.end_time = end_time; }
 
     public int getPoints(){ return  points; }
 

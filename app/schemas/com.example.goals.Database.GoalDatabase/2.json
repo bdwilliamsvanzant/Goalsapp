@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "1547ef35b113c8fc76ce88c0bf4f31a1",
+    "identityHash": "ddbaa6988dc4e57f80da4e3fd955c6d7",
     "entities": [
       {
         "tableName": "goals",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`goal_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Goal Name` TEXT, `Description` TEXT, `Difficulty` INTEGER NOT NULL, `Start Date` TEXT, `End Date` TEXT, `Points` INTEGER NOT NULL, `Time Span` TEXT, `Complete` INTEGER NOT NULL, `Complete Date` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`goal_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Goal Name` TEXT, `Description` TEXT, `Difficulty` INTEGER NOT NULL, `Start Date` INTEGER NOT NULL, `End Date` INTEGER NOT NULL, `Points` INTEGER NOT NULL, `Time Span` TEXT, `Complete` INTEGER NOT NULL, `Complete Date` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "goal_id",
@@ -35,14 +35,14 @@
           {
             "fieldPath": "start_time",
             "columnName": "Start Date",
-            "affinity": "TEXT",
-            "notNull": false
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "end_time",
             "columnName": "End Date",
-            "affinity": "TEXT",
-            "notNull": false
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "points",
@@ -164,7 +164,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1547ef35b113c8fc76ce88c0bf4f31a1\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ddbaa6988dc4e57f80da4e3fd955c6d7\")"
     ]
   }
 }

@@ -59,19 +59,20 @@ public class AddRewardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (update) {
-
+                    //error checking
+                    //either title or content is not entered.
                     if(et_title.getText().toString().equals("") || et_content.getText().toString().equals("")){
                         fillcounter += 1;
                     }
                     if(fillcounter == 0){
-                    if (et_content.getText() != null) {
-                        reward.setDescription(et_content.getText().toString());
-                    }
-                    if (et_title.getText() != null) {
-                        reward.setReward_name(et_title.getText().toString());
-                    }
-                    goalDatabase.getRewardDao().updateReward(reward);
-                    setResult(reward, 2);
+                        if (et_content.getText() != null) {
+                            reward.setDescription(et_content.getText().toString());
+                        }
+                        if (et_title.getText() != null) {
+                            reward.setReward_name(et_title.getText().toString());
+                        }
+                        goalDatabase.getRewardDao().updateReward(reward);
+                        setResult(reward, 2);
                     }
                     else{
                         AlertDialog alertDialog = new AlertDialog.Builder(AddRewardActivity.this).create();

@@ -62,8 +62,10 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
 
         @Override
         protected List<Goal> doInBackground(Void... voids) {
-            if (activityReference.get() != null)
-                return activityReference.get().goalDatabase.getGoalDao().getGoals();
+            if (activityReference.get() != null) {
+                Date temp = new Date();
+                return activityReference.get().goalDatabase.getGoalDao().getGoals(temp.getTime());
+            }
             else
                 return null;
         }
