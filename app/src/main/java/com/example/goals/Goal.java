@@ -45,12 +45,6 @@ public class Goal implements Serializable {
     @Ignore
     public Goal(){}
 
-    /*
-    public Goal(String content, String goal_name){
-        this.goal_name = goal_name;
-        this.content = content;
-    }*/
-
     public Goal(String content, String goal_name, int difficulty, int points, long start_time, long end_time) {
         this.goal_name = goal_name;
         this.content = content;

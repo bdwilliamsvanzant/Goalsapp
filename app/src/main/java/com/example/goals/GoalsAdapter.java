@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.goals.util.Constants;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -72,12 +74,42 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalHolder> 
             Log.e("bind", "onBindViewHolder: at position" + list.get(position) + " position " + position);
             Log.e("bind", "position" + position);
             if(list.get(position)!= null) {
-                holder.textViewTitle.setText(list.get(position).getGoal_name());
-                holder.textViewContent.setText(list.get(position).getContent());
-                holder.textViewDifficulty.setText(Integer.toString(list.get(position).getDifficulty()));
-                holder.textViewStartTime.setText(longToString(list.get(position).getStart_time()));
-                holder.textViewEndTime.setText(longToString(list.get(position).getEnd_time()));
-                holder.textViewPoints.setText(Integer.toString(list.get(position).getPoints()));
+                String difficulty = "";
+                int goalDiff = list.get(position).getDifficulty();
+                switch(goalDiff) {
+                    case 0:
+                        difficulty = "Difficulty Not Set";
+                        break;
+                    case 1:
+                        difficulty = "Easy";
+                        break;
+                    case 2:
+                        difficulty = "Medium";
+                        break;
+                    case 3:
+                        difficulty = "Hard";
+                        break;
+                    case 4:
+                        difficulty = "Very Hard";
+                        break;
+                }
+                if(difficulty.isEmpty()){
+                    difficulty = "Difficulty Not Set";
+                }
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY", Locale.US);
+                String goalTitle = Constants.LABEL_GOAL_NAME + list.get(position).getGoal_name();
+                String goalDescription = Constants.LABEL_GOAL_DESCRIPTION + list.get(position).getContent();
+                String goalPoints = Constants.LABEL_POINTS + list.get(position).getPoints();
+                String goalDifficulty = Constants.LABEL_DIFFICULTY + difficulty;
+                String startDateString = Constants.LABEL_START_DATE + dateFormat.format(list.get(position).getStart_time());
+                String endDateString = Constants.LABEL_END_DATE + dateFormat.format(list.get(position).getEnd_time());
+
+                holder.textViewTitle.setText(goalTitle);
+                holder.textViewContent.setText(goalDescription);
+                holder.textViewPoints.setText(goalPoints);
+                holder.textViewDifficulty.setText(goalDifficulty);
+                holder.textViewEndTime.setText(endDateString);
+                holder.textViewStartTime.setText(startDateString);
             }
         /*
         if(list.get(position).getComplete()){

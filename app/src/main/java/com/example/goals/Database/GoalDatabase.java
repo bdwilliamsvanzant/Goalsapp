@@ -9,12 +9,15 @@ import com.example.goals.Goal;
 import com.example.goals.Reward;
 import com.example.goals.User;
 import com.example.goals.util.Constants;
+import com.example.goals.util.Converters;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 @Database(entities = {Goal.class, Reward.class, User.class}, version = Constants.DB_VERSION)
+@TypeConverters({Converters.class})
 public abstract class GoalDatabase extends RoomDatabase {
     public abstract GoalDao getGoalDao();
     public abstract RewardDao getRewardDao();

@@ -12,6 +12,11 @@
     <string name="reward_count_label">Reward Count: </string>
     <string name="add_reward_button">Add Reward</string>
     <string name="but_edit_reward">Edit Reward</string>
+    <string name="start_date_hint">"Select Start Date</string>
+    <string name="end_date_hint">Select End Date</string>
+    <string name="but_save_goal">Save Goal</string>
+    <string name="label_goal_name">Goal Name: </string>
+    <string name="label_description">Description: </string>
     <string-array name="difficulty_array">
         <item>Easy</item>
         <item>Medium</item>

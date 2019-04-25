@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,7 +55,7 @@ public class AddGoalActivity extends AppCompatActivity {
     private int points;
     private Spinner difficulty;
     private int fillcounter = 0;
-
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     private String longToString(long temp)
     {
         Date time = new Date(temp);
@@ -67,6 +69,7 @@ public class AddGoalActivity extends AppCompatActivity {
         Date time = new Date();
         try{
             Date time1 = new SimpleDateFormat("MM/dd/yyyy").parse(temp);
+
             time.setTime(time1.getTime());
 
         }
@@ -78,6 +81,9 @@ public class AddGoalActivity extends AppCompatActivity {
         return time.getTime();
     }
 
+    private Date start_Date, end_Date;
+    private DatePickerDialog.OnDateSetListener sDateSetListener, eDateSetListener;
+    String startDateString, endDateString;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -96,9 +102,11 @@ public class AddGoalActivity extends AppCompatActivity {
             update = true;
             et_title.setText(goal.getGoal_name());
             et_content.setText(goal.getContent());
-            et_startDate.setText(longToString(goal.getStart_time()));
-            et_endDate.setText(longToString(goal.getEnd_time()));
+            et_startDate.setText(dateFormat.format(goal.getStart_time()));
+            et_endDate.setText(dateFormat.format(goal.getEnd_time()));
             difficulty.setSelection(goal.getDifficulty());
+            end_Date = fromTimestamp(goal.getEnd_time());
+            start_Date = fromTimestamp(goal.getStart_time());
         }
 
         save_butt.setOnClickListener(new View.OnClickListener() {
@@ -117,10 +125,11 @@ public class AddGoalActivity extends AppCompatActivity {
                         goal.setGoal_name(et_title.getText().toString());
                     }
                     if (et_startDate.getText() != null) {
-                        goal.setStart_time(stringToLong(et_startDate.getText().toString()));
+                        //goal.setStart_time(stringToLong(et_startDate.getText().toString()));
+                        goal.setStart_time(start_Date.getTime());
                     }
                     if (et_endDate.getText() != null) {
-                        goal.setEnd_time(stringToLong(et_endDate.getText().toString()));
+                        goal.setEnd_time(end_Date.getTime());
                     }
                     goalDatabase.getGoalDao().updateGoal(goal);
                     setResult(goal, 2);
@@ -149,14 +158,14 @@ public class AddGoalActivity extends AppCompatActivity {
                         try {
                             createNotification();
 
-                            Date start = new SimpleDateFormat("MM/dd/yyyy").parse(et_startDate.getText().toString());
-                            Date end = new SimpleDateFormat("MM/dd/yyyy").parse(et_endDate.getText().toString());
+                            //Date start = new SimpleDateFormat("MM/dd/yyyy",Locale.US).parse(et_startDate.getText().toString());
+                            Date end = new SimpleDateFormat("MM/dd/yyyy",Locale.US).parse(et_endDate.getText().toString());
                             goal = new Goal(et_content.getText().toString(),
                                     et_title.getText().toString(),
                                     difficulty.getSelectedItemPosition(),
                                     points,
-                                    start.getTime(),
-                                    end.getTime());
+                                    start_Date.getTime(),
+                                    end_Date.getTime());
                             new InsertTask(AddGoalActivity.this, goal).execute();
                         }
                         catch (ParseException e)
@@ -182,10 +191,11 @@ public class AddGoalActivity extends AppCompatActivity {
 
         });
 
-        final Button startDate_butt = findViewById(R.id.startDatebutton);
-        Button endDate_butt = findViewById(R.id.endDateButton);
 
-        startDate_butt.setOnClickListener(new View.OnClickListener() {
+        //final Button startDate_butt = findViewById(R.id.startDatebutton);
+        //Button endDate_butt = findViewById(R.id.endDateButton);
+
+        et_startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Calendar cldr = Calendar.getInstance();
@@ -193,18 +203,36 @@ public class AddGoalActivity extends AppCompatActivity {
                 int month = cldr.get(Calendar.MONTH);
                 int year = cldr.get(Calendar.YEAR);
 
-                datepicker = new DatePickerDialog(AddGoalActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        et_startDate.setText((month + 1) + "/" + dayOfMonth + "/" + year);
+                datepicker = new DatePickerDialog(AddGoalActivity.this,
+                        sDateSetListener,
+                        year, month, day);
+                if(end_Date != null){
+                    if(getDateFromDatePicker(datepicker.getDatePicker()).after(end_Date)){
+                        datepicker.getDatePicker().setMaxDate(dateToTimestamp(end_Date));
                     }
-                }, year, month, day);
 
+                }
                 datepicker.show();
             }
         });
 
-        endDate_butt.setOnClickListener(new View.OnClickListener() {
+        sDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                start_Date = getDateFromDatePicker(datepicker.getDatePicker());
+                Date currDate = new Date(System.currentTimeMillis());
+                end_Date = (start_Date.before(currDate)?currDate:start_Date);
+                startDateString = dateFormat.format(start_Date);
+                //end_Date = (end_Date.before(start_Date))?start_Date:end_Date;
+                et_startDate.setText(startDateString);
+                et_endDate.setText(dateFormat.format(end_Date));
+            }
+        };
+
+
+
+        et_endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!et_startDate.getText().toString().equals("")){
@@ -217,16 +245,17 @@ public class AddGoalActivity extends AppCompatActivity {
 
 
                     try {
-                        Date temp = new SimpleDateFormat("MM/dd/yyyy").parse(et_startDate.getText().toString());
-                        Date newDate = new Date();
+                        //Date temp was start_Date
+                        Date tem = new SimpleDateFormat("MM/dd/yyyy", Locale.US).parse(et_startDate.getText().toString());
+                        Date temp = start_Date;
+                        //Date newDate is end_Date
+                        Date newDate = new Date(System.currentTimeMillis());
+                        datepicker = new DatePickerDialog(AddGoalActivity.this,
+                                eDateSetListener, year, month, day);
                         long current = temp.getTime() > newDate.getTime() ? temp.getTime(): newDate.getTime();
-                        datepicker = new DatePickerDialog(AddGoalActivity.this, new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                et_endDate.setText((month + 1)  + "/" + dayOfMonth + "/" + year);
-                            }
-                        }, year, month, day);
+                        datepicker = new DatePickerDialog(AddGoalActivity.this, eDateSetListener,year, month, day);
                         datepicker.getDatePicker().setMinDate(current);
+
                         datepicker.show();
                     }
                     catch (ParseException e) {              // Insert this block.
@@ -238,10 +267,45 @@ public class AddGoalActivity extends AppCompatActivity {
             }
         });
 
-        Spinner spinner = findViewById(R.id.difficulty_spinner);
+        eDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                end_Date = getDateFromDatePicker(datepicker.getDatePicker());
+                endDateString = dateFormat.format(end_Date);
+                et_endDate.setText(endDateString);
+            }
+        };
+
+
+        //Spinner spinner = findViewById(R.id.difficulty_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.difficulty_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        difficulty.setAdapter(adapter);
+    }
+
+    public Long dateToTimestamp(Date date) {
+        if (date == null) {
+            return null;
+        } else {
+            return date.getTime();
+        }
+    }
+
+    public Date fromTimestamp(Long value) {
+        return value == null ? null : new Date(value);
+    }
+
+
+
+    public static java.util.Date getDateFromDatePicker(DatePicker datePicker) {
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth();
+        int year = datePicker.getYear();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+
+        return calendar.getTime();
     }
 
     private void setResult(Goal goal, int flag){
@@ -279,7 +343,6 @@ public class AddGoalActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
     }
-
     private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
         private WeakReference<AddGoalActivity> activityReference;
         private Goal goal;
