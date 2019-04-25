@@ -1,8 +1,11 @@
 package com.example.goals.DatabaseActivities;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -88,7 +91,7 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        createNotificationChannel();
         initializeViews();
         BottomNavigationView nav = findViewById(R.id.navigation);
         Menu menu = nav.getMenu();
@@ -128,6 +131,24 @@ public class GoalListActivity extends AppCompatActivity implements GoalsAdapter.
 
         }
     }
+
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "asdf";
+            String description = "desccc";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("qwerty", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 
     private void initializeViews() {
         Toolbar toolbar = findViewById(R.id.toolbar);

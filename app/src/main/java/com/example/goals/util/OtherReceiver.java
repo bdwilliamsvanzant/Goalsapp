@@ -24,29 +24,29 @@ public class OtherReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("OtherRreceiver", "entered receiver");
+        Log.i("OtherReceiver", "entered receiver");
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         int importance = NotificationManager.IMPORTANCE_HIGH;
 
 //***********************OPTION 1 ****************************
-        if (Build.VERSION.SDK_INT >= 26) {
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "adf");
-
-            builder.setSmallIcon(R.mipmap.ic_launcher)
-                    .setTicker("ticker")
-                    .setWhen(System.currentTimeMillis()+2000)
-                    .setAutoCancel(true)
-                    .setContentTitle("whats up")
-                    .setContentText("goals and stuff yo");
-
-            Notification notification = builder.build();
-
-
-            int id = intent.getIntExtra(NOTIFICATION_ID, 0);
-            notificationManager.notify(id, notification);
-            Log.i("OtherRreceiver", "entered iffffr");
-        }
+//        if (Build.VERSION.SDK_INT >= 26) {
+//
+//            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "adf");
+//
+//            builder.setSmallIcon(R.mipmap.ic_launcher)
+//                    .setTicker("ticker")
+//                    .setWhen(System.currentTimeMillis()+2000)
+//                    .setAutoCancel(true)
+//                    .setContentTitle("whats up")
+//                    .setContentText("goals and stuff yo");
+//
+//            Notification notification = builder.build();
+//
+//
+//            int id = intent.getIntExtra(NOTIFICATION_ID, 0);
+//            notificationManager.notify(id, notification);
+//            Log.i("OtherRreceiver", "entered iffffr");
+//        }
 
 
 //***********************OPTION 2 ****************************************

@@ -32,6 +32,8 @@ import java.util.Locale;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 
 import android.app.AlarmManager;
@@ -314,6 +316,7 @@ public class AddGoalActivity extends AppCompatActivity {
     }
 
     private void createNotification(){
+        //**********for use with Receiver.java
 //        Log.i("createNotification","entered");
 //
 //        Calendar sevendayalarm = Calendar.getInstance();
@@ -329,19 +332,46 @@ public class AddGoalActivity extends AppCompatActivity {
 
 
 
+//***********************for use with OtherReceiver.java
+//        Log.i("createNotification","complete functia;dgjadfj");
+//
+//        Notification notification = new Notification();
+//
+//        Intent notificationIntent = new Intent(this, OtherReceiver.class);
+//        notificationIntent.putExtra(OtherReceiver.NOTIFICATION_ID, 1);
+//        notificationIntent.putExtra(OtherReceiver.NOTIFICATION, notification);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        long futureInMillis = SystemClock.elapsedRealtime() + 100;
+//        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+//        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
 
-        Log.i("createNotification","complete functia;dgjadfj");
 
-        Notification notification = new Notification();
+        //option 3
+        Log.i("createNotification","entered");
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "qwerty")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setWhen(System.currentTimeMillis()+2000)
+                .setContentTitle("asdfasdfasdf")
+                .setContentText("asdfasdf")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, builder.build());
 
-        Intent notificationIntent = new Intent(this, OtherReceiver.class);
-        notificationIntent.putExtra(OtherReceiver.NOTIFICATION_ID, 1);
-        notificationIntent.putExtra(OtherReceiver.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        Intent intent = new Intent(this, AlertDetails.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+//
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "qwerty")
+//                .setSmallIcon(R.drawable.notification_icon)
+//                .setContentTitle("My notification")
+//                .setContentText("Hello World!")
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//                // Set the intent that will fire when the user taps the notification
+//                .setContentIntent(pendingIntent)
+//                .setAutoCancel(true);
 
-        long futureInMillis = SystemClock.elapsedRealtime() + 100;
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+
     }
     private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
         private WeakReference<AddGoalActivity> activityReference;
