@@ -21,11 +21,11 @@ public interface RewardDao {
     @Query("SELECT * FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 0")
     List<Reward> getRewards();
 
-    @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 0")
+    @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 1")
     int getEarnedRewards();
 
 
-    @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 1")
+    @Query("SELECT COUNT(*) FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 0")
     int getUnearnedRewards();
 
     @Query("SELECT SUM(points) FROM " + Constants.TABLE_NAME_REWARD + " WHERE Complete = 1")
