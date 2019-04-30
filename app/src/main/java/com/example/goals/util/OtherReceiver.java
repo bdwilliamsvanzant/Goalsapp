@@ -20,7 +20,7 @@ public class OtherReceiver extends BroadcastReceiver {
 
         Log.i("createNotification","entered");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "qwerty")
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle("Expiring goals")
                 .setContentText("you have a goal that expires today!!!!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
