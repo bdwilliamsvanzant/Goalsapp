@@ -60,9 +60,6 @@
             android:parentActivityName=".DatabaseActivities.RewardListActivity">
         </activity>
         <receiver android:name=".util.OtherReceiver" />
-        <service android:name=".util.Receiver" android:enabled="true">
-            <intent-filter> <action android:name="NOTIFICATION_SERVICE" /></intent-filter>
-        </service>
     </application>
 
 </manifest>

@@ -20,7 +20,6 @@ import com.example.goals.Goal;
 import com.example.goals.Database.GoalDatabase;
 import com.example.goals.R;
 import com.example.goals.util.OtherReceiver;
-import com.example.goals.util.Receiver;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.lang.ref.WeakReference;
@@ -32,20 +31,12 @@ import java.util.Locale;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 
-import android.app.AlarmManager;
 import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.app.Activity;
 import android.os.SystemClock;
-import android.view.Menu;
-import android.view.MenuItem;
 
 public class AddGoalActivity extends AppCompatActivity {
 
@@ -58,6 +49,9 @@ public class AddGoalActivity extends AppCompatActivity {
     private Spinner difficulty;
     private int fillcounter = 0;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    private NotificationManagerCompat notificationManager;
+
+
     private String longToString(long temp)
     {
         Date time = new Date(temp);
@@ -158,7 +152,7 @@ public class AddGoalActivity extends AppCompatActivity {
                 }
                 if (et_content.getText() != null && et_title.getText() != null && et_startDate.getText() != null && et_endDate.getText() != null && fillcounter == 0) {
                         try {
-                            createNotification();
+
 
                             //Date start = new SimpleDateFormat("MM/dd/yyyy",Locale.US).parse(et_startDate.getText().toString());
                             Date end = new SimpleDateFormat("MM/dd/yyyy",Locale.US).parse(et_endDate.getText().toString());
@@ -169,6 +163,7 @@ public class AddGoalActivity extends AppCompatActivity {
                                     start_Date.getTime(),
                                     end_Date.getTime());
                             new InsertTask(AddGoalActivity.this, goal).execute();
+                            createNotification(end_Date.getTime());
                         }
                         catch (ParseException e)
                         {
@@ -315,64 +310,40 @@ public class AddGoalActivity extends AppCompatActivity {
         finish();
     }
 
-    private void createNotification(){
-        //**********for use with Receiver.java
-//        Log.i("createNotification","entered");
-//
-//        Calendar sevendayalarm = Calendar.getInstance();
-//        sevendayalarm.add(Calendar.DATE, 0);
-//
-//        Intent intent = new Intent(this, Receiver.class);
-//
-//        //1- requestCode is used to get the same pending intent later on (for cancelling etc)
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
-//        Log.i("createNotification","about to create AlarmMANAGER");
-//        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
-//        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 100,pendingIntent);
+    private void createNotification(long end_Date){
+        Date today = new Date();
+
+        end_Date = end_Date - today.getTime();
+        if (end_Date <= 86400000){
+            end_Date = 0;
+        }
 
 
-
-//***********************for use with OtherReceiver.java
-//        Log.i("createNotification","complete functia;dgjadfj");
-//
-//        Notification notification = new Notification();
-//
-//        Intent notificationIntent = new Intent(this, OtherReceiver.class);
-//        notificationIntent.putExtra(OtherReceiver.NOTIFICATION_ID, 1);
-//        notificationIntent.putExtra(OtherReceiver.NOTIFICATION, notification);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//        long futureInMillis = SystemClock.elapsedRealtime() + 100;
-//        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-//        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
-
-
-        //option 3
         Log.i("createNotification","entered");
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "qwerty")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setWhen(System.currentTimeMillis()+2000)
-                .setContentTitle("asdfasdfasdf")
-                .setContentText("asdfasdf")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, builder.build());
-
-//        Intent intent = new Intent(this, AlertDetails.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-//
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "qwerty")
-//                .setSmallIcon(R.drawable.notification_icon)
-//                .setContentTitle("My notification")
-//                .setContentText("Hello World!")
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//                // Set the intent that will fire when the user taps the notification
-//                .setContentIntent(pendingIntent)
-//                .setAutoCancel(true);
-
-
+        scheduleNotification(getNotification("delay time"), (int)end_Date);
     }
+
+    private void scheduleNotification(Notification notification, int delay) {
+        Log.i("scheduleNotification","entered");
+        Intent notificationIntent = new Intent(this, OtherReceiver.class);
+        notificationIntent.putExtra(OtherReceiver.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(OtherReceiver.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        long futureInMillis = SystemClock.elapsedRealtime() + delay;
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+    }
+
+    private Notification getNotification(String content) {
+        Log.i("getNotification","entered");
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setContentTitle("Scheduled Notification");
+        builder.setContentText(content);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        return builder.build();
+    }
+
     private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
         private WeakReference<AddGoalActivity> activityReference;
         private Goal goal;
