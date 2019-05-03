@@ -315,9 +315,10 @@ public class AddGoalActivity extends AppCompatActivity {
 
         end_Date = end_Date - today.getTime();
         long oneDay = 86400000;
-        if (end_Date <= oneDay){
-            end_Date = 0;
-        }
+//        below if statement not necessary
+//        if (end_Date == 0){
+//            end_Date = 0;
+//        }
 
         Log.i("createNotification","entered");
         scheduleNotification(getNotification("delay time"), (int)end_Date);

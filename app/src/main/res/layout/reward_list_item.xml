@@ -29,7 +29,7 @@
             <TextView
                 android:id="@+id/item_text"
                 android:layout_gravity="center"
-                tools:text="Description:"
+                tools:text="Description: "
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                tools:text="Point Cost:" />
+                tools:text="Point Cost: " />
 
             <!--<TextView-->
                 <!--android:id="@+id/earn_date"-->
