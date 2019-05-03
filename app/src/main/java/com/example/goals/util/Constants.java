@@ -15,4 +15,8 @@ final public class Constants {
     public static final String LABEL_DIFFICULTY = "Difficulty: ";
     public static final String LABEL_START_DATE = "Start Date: ";
     public static final String LABEL_END_DATE = "End Date: ";
+
+    public static final String LABEL_REWARD_NAME = "Reward: ";
+    public static final String LABEL_REWARD_DESCRIPTION = "Description: ";
+    public static final String LABEL_REWARD_POINTS = "Point value: ";
 }

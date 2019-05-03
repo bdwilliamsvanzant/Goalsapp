@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.goals.util.Constants;
+
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,9 +39,17 @@ public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.RewardHo
     public void onBindViewHolder(RewardHolder holder, int position) {
         if(list.get(position)!= null) {
             Log.e("bind", "onBindViewHolder: " + list.get(position));
-            holder.textViewTitle.setText(list.get(position).getReward_name());
-            holder.textViewDescription.setText(list.get(position).getDescription());
-            holder.textViewPoints.setText(Integer.toString(list.get(position).getPoints()));
+
+            String rewardTitle = Constants.LABEL_REWARD_NAME + list.get(position).getReward_name();
+            String rewardDescription = Constants.LABEL_REWARD_DESCRIPTION + list.get(position).getDescription();
+            String rewardPoints = Constants.LABEL_REWARD_POINTS + Integer.toString(list.get(position).getPoints());
+
+
+
+
+            holder.textViewTitle.setText(rewardTitle);
+            holder.textViewDescription.setText(rewardDescription);
+            holder.textViewPoints.setText(rewardPoints);
         }
     }
 

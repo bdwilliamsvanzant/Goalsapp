@@ -3,12 +3,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.example.goals.R;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 public class OtherReceiver extends BroadcastReceiver {
 
@@ -18,9 +23,13 @@ public class OtherReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+
+
         Log.i("createNotification","entered");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "qwerty")
                 .setSmallIcon(R.drawable.ic_stat_name)
+                .setLargeIcon(largeIcon)
                 .setContentTitle("Expiring goals")
                 .setContentText("you have a goal that expires today!!!!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);

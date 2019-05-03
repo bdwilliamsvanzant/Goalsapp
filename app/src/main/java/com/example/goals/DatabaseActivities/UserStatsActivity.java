@@ -13,6 +13,7 @@ import com.example.goals.Database.GoalDatabase;
 import com.example.goals.Goal;
 import com.example.goals.R;
 import com.example.goals.Reward;
+import com.example.goals.util.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.ref.WeakReference;
@@ -150,12 +151,12 @@ public class UserStatsActivity  extends AppCompatActivity {
                 //set UI to goal values
                 TextView goalTextView = rootView.findViewById(R.id.goal_info);
 
-                goalTextView.setText(goal.getGoal_name()+"\n"
-                        +goal.getContent() +"\n"
+                goalTextView.setText(Constants.LABEL_GOAL_NAME + goal.getGoal_name()+"\n"
+                        +Constants.LABEL_GOAL_DESCRIPTION + goal.getContent() +"\n"
                  //       +goal.getDifficulty()+"\n"
-                        +goal.getPoints()+"\n"
-                        + longToString(goal.getStart_time())+"\n"
-                        + longToString(goal.getEnd_time())
+                        +Constants.LABEL_POINTS + goal.getPoints()+"\n"
+                        + Constants.LABEL_START_DATE + longToString(goal.getStart_time())+"\n"
+                        + Constants.LABEL_END_DATE + longToString(goal.getEnd_time())
                 );
             }
         }
@@ -185,9 +186,9 @@ public class UserStatsActivity  extends AppCompatActivity {
                 //set UI to reward values
                 TextView rewardTextView = rootView.findViewById(R.id.reward_info);
 
-                rewardTextView.setText(reward.getReward_name()+"\n"
-                        +reward.getDescription()+"\n"
-                        +reward.getPoints()
+                rewardTextView.setText(Constants.LABEL_REWARD_NAME + reward.getReward_name()+"\n"
+                        +Constants.LABEL_REWARD_DESCRIPTION + reward.getDescription()+"\n"
+                        +Constants.LABEL_REWARD_POINTS + reward.getPoints()
                 );
             }
         }
