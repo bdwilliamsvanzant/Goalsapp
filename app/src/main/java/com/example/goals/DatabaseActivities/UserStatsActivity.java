@@ -17,8 +17,10 @@ import com.example.goals.util.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -148,16 +150,25 @@ public class UserStatsActivity  extends AppCompatActivity {
         protected void onPostExecute(Goal goal) {
 
             if (goal != null ) {
-                //set UI to goal values
-                TextView goalTextView = rootView.findViewById(R.id.goal_info);
 
-                goalTextView.setText(Constants.LABEL_GOAL_NAME + goal.getGoal_name()+"\n"
-                        +Constants.LABEL_GOAL_DESCRIPTION + goal.getContent() +"\n"
-                 //       +goal.getDifficulty()+"\n"
-                        +Constants.LABEL_POINTS + goal.getPoints()+"\n"
-                        + Constants.LABEL_START_DATE + longToString(goal.getStart_time())+"\n"
-                        + Constants.LABEL_END_DATE + longToString(goal.getEnd_time())
-                );
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY", Locale.US);
+
+                //set UI to goal values
+                TextView goalTitle = rootView.findViewById(R.id.goal_name);
+                goalTitle.setText(Constants.LABEL_GOAL_NAME + goal.getGoal_name());
+
+                TextView goalDesc = rootView.findViewById(R.id.item_text);
+                goalDesc.setText(Constants.LABEL_GOAL_DESCRIPTION + goal.getContent());
+
+                TextView goalPoints = rootView.findViewById(R.id.tv_goal_points);
+                goalPoints.setText(Constants.LABEL_POINTS + goal.getPoints());
+
+                TextView goalStart = rootView.findViewById(R.id.tv_goal_startTime);
+                goalStart.setText(Constants.LABEL_START_DATE + dateFormat.format(goal.getStart_time()));
+
+                TextView goalEnd = rootView.findViewById(R.id.tv_goal_endTime);
+                goalEnd.setText(Constants.LABEL_END_DATE + dateFormat.format(goal.getEnd_time()));
+
             }
         }
     }
@@ -184,12 +195,15 @@ public class UserStatsActivity  extends AppCompatActivity {
         protected void onPostExecute(Reward reward) {
             if (reward != null ) {
                 //set UI to reward values
-                TextView rewardTextView = rootView.findViewById(R.id.reward_info);
+                TextView rewardTitle = rootView.findViewById(R.id.reward_name);
+                rewardTitle.setText(Constants.LABEL_REWARD_NAME + reward.getReward_name());
 
-                rewardTextView.setText(Constants.LABEL_REWARD_NAME + reward.getReward_name()+"\n"
-                        +Constants.LABEL_REWARD_DESCRIPTION + reward.getDescription()+"\n"
-                        +Constants.LABEL_REWARD_POINTS + reward.getPoints()
-                );
+                TextView rewardDesc = rootView.findViewById(R.id.reward_text);
+                rewardDesc.setText(Constants.LABEL_REWARD_DESCRIPTION + reward.getDescription());
+
+                TextView rewardPoints = rootView.findViewById(R.id.tv_reward_points);
+                rewardPoints.setText(Constants.LABEL_REWARD_POINTS + reward.getPoints());
+
             }
         }
     }

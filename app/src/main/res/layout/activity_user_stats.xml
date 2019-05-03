@@ -206,11 +206,42 @@
                     android:text="Most Recently Completed Goal" />
 
                 <TextView
-                    android:id="@+id/goal_info"
+                    android:id="@+id/goal_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="Goal: " />
+                    tools:text="Goal: "
+                    />
+                <TextView
+                    android:id="@+id/item_text"
+                    android:layout_gravity="center"
+                    tools:text="Description:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"/>
+
+
+                <TextView
+                    android:id="@+id/tv_goal_points"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    tools:text="Points:" />
+
+                <TextView
+                    android:id="@+id/tv_goal_startTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    tools:text="Start Time:" />
+
+                <TextView
+                    android:id="@+id/tv_goal_endTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    tools:text="End Time: " />
 
 
             </LinearLayout>
@@ -237,14 +268,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="22sp"
-                    android:text="Most Recent Reward Earned" />
+                    android:text="Most Recently Earned Reward" />
 
                 <TextView
-                    android:id="@+id/reward_info"
+                    android:id="@+id/reward_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="Reward: " />
+                    tools:text="Reward:  "
+                    />
+                <TextView
+                    android:id="@+id/reward_text"
+                    android:layout_gravity="center"
+                    tools:text="Description: "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"/>
+
+
+                <TextView
+                    android:id="@+id/tv_reward_points"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    tools:text="Point Cost: " />
 
             </LinearLayout>
 
