@@ -321,7 +321,7 @@ public class AddGoalActivity extends AppCompatActivity {
 //        }
 
         Log.i("createNotification","entered");
-        scheduleNotification(getNotification("delay time"), (int)end_Date);
+        scheduleNotification(getNotification(), (int)end_Date);
     }
 
     private void scheduleNotification(Notification notification, int delay) {
@@ -336,11 +336,11 @@ public class AddGoalActivity extends AppCompatActivity {
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
     }
 
-    private Notification getNotification(String content) {
+    private Notification getNotification() {
         Log.i("getNotification","entered");
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Scheduled Notification");
-        builder.setContentText(content);
+        builder.setContentText("");
         builder.setSmallIcon(R.mipmap.ic_launcher);
         return builder.build();
     }
